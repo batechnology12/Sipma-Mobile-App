@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225398620061",
+    "project_id": "sipmaa-ff120",
+    "storage_bucket": "sipmaa-ff120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225398620061:android:2919b2be1d45f9e908b974",
+        "android_client_info": {
+          "package_name": "com.sipmaa.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225398620061-2jgr8b2odrdd7d6rossg20o0vu2shd6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiB3YiAZOejNrZsiYS8_Jb0U1SsYTWMQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225398620061-2jgr8b2odrdd7d6rossg20o0vu2shd6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
