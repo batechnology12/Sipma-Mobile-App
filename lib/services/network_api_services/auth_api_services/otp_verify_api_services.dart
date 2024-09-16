@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simpa/models/register_model.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class OtpVerifyServicesApi extends BaseApiService {

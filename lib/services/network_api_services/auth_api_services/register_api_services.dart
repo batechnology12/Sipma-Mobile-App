@@ -8,9 +8,8 @@ class RegisterServicesApi extends BaseApiService {
     dynamic responseJson;
     try {
       var dio = Dio();
-      
 
-      var response = await dio.post(registerURl,
+      var response = await dio.post(registerURL,
           options: Options(
               headers: {
                 'Accept': 'application/json',

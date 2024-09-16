@@ -1,16 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/posts_controller.dart';
-import 'package:simpa/models/get_all_post_modals.dart';
 import 'package:simpa/view/post_view/others_post_view.dart';
-import 'package:simpa/view/post_view/post_view.dart';
-import 'package:simpa/widgets/home_containers.dart';
-import 'package:simpa/widgets/textfield.dart';
 
 import '../widgets/bottumnavigationbar.dart';
 import '../widgets/search_field.dart';
@@ -49,15 +42,15 @@ class _SearchPageState extends State<SearchPage> {
         elevation: 0,
         backgroundColor: kwhite,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.to(BottomNavigationBarExample());
           },
         ),
-        title: Text('Search'),
-        actions: [],
+        title: const Text('Search'),
+        actions: const [],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
+          preferredSize: const Size.fromHeight(60.0),
           child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: search(
@@ -69,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
       body: GetBuilder<PostsController>(builder: (_) {
         return postsController.searchPosts.isEmpty &&
                 searchtextController.text.isNotEmpty
-            ? Center(
+            ? const Center(
                 child: Text("No data"),
               )
             : GridView.builder(

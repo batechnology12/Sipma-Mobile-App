@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/searchable_dropdown-master/lib/dropdown_search.dart';
 
 class DropdownTextFieldWidgets extends StatefulWidget {
-  DropdownTextFieldWidgets(
+  const DropdownTextFieldWidgets(
       {super.key, required this.DropHintText, required this.list});
 
   final String DropHintText;
@@ -22,7 +21,7 @@ class _DropdownTextFieldWidgetsState extends State<DropdownTextFieldWidgets> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(height: 50,
+    return SizedBox(height: 50,
       child: DropdownSearch(
         // itemAsString: (Educationlistdata u) =>
         //     u.title,
@@ -68,7 +67,7 @@ class _DropdownTextFieldWidgetsState extends State<DropdownTextFieldWidgets> {
                           // );
                           Navigator.pop(context);
                         },
-                        child: Container(
+                        child: SizedBox(
                           height: 30,
                           // color: Colors.red,
                           child: Text(widget.list,

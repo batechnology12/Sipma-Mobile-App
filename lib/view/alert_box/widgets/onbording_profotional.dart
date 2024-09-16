@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 
 class ObordingProfotional extends StatefulWidget {
-  ObordingProfotional({super.key});
+  const ObordingProfotional({super.key});
 
   @override
   State<ObordingProfotional> createState() => _ObordingProfotionalState();
@@ -259,7 +258,7 @@ class _ObordingProfotionalState extends State<ObordingProfotional> {
             ksizedbox40,
             InkWell(
               onTap: (){
-                var type;
+                String? type;
                 if(authController.professinalindex.value == 0){
                   type = "Mentor";
                 }else if(authController.professinalindex.value == 1){
@@ -267,7 +266,7 @@ class _ObordingProfotionalState extends State<ObordingProfotional> {
                 }else if(authController.professinalindex.value == 2){
                   type = "Guide";
                 }
-                authController.studentProfessionaltype(type: type);
+                authController.studentProfessionaltype(type: type!);
               },
               child: Container(
                 width: double.infinity,

@@ -12,7 +12,7 @@ class ForgetPwdVerifyOtpApiServices extends BaseApiService {
       final prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString("data");
 
-      var response = await dio.post(verifyOtp,
+      var response = await dio.post(verifyOtpURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:simpa/controllers/profile_controller.dart';
 import '../constands/constands.dart';
 
@@ -25,12 +24,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change Password'),
+        title: const Text('Change Password'),
         backgroundColor: Colors.white,
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(
@@ -47,12 +46,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       });
                     },
                     icon: _isObscure
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off),
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
                   )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           Padding(
@@ -69,12 +68,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       });
                     },
                     icon: _isvalue
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off),
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
                   )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           Padding(
@@ -91,11 +90,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         });
                       },
                       icon: _isvalue2
-                          ? Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility),),),
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),),),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           ElevatedButton(
@@ -103,7 +102,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                minimumSize: Size(150, 45),
+                minimumSize: const Size(150, 45),
                 backgroundColor: kblue),
             onPressed: () {
               if (oldPasswordController.text.isNotEmpty &&
@@ -115,7 +114,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     condirmPassword: confrmPasswordController.text);
               }
             },
-            child: Text(
+            child: const Text(
               'Update',
               style: TextStyle(fontSize: 17, color: Colors.white),
             ),

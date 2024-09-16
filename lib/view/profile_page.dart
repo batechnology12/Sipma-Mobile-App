@@ -3,9 +3,9 @@ import 'package:date_format/date_format.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:readmore/readmore.dart';
@@ -23,6 +23,7 @@ import 'package:simpa/view/profile_settings_view/education_skills_update_page.da
 import 'package:simpa/view/setting_privacy.dart';
 import 'package:simpa/view/setting_proifile_page.dart';
 import 'package:simpa/view/setting_term_condition.dart';
+import 'package:simpa/widgets/home_containers.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -32,8 +33,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-
   List<String> educationList = [
     "10th",
     "12th",
@@ -56,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
@@ -120,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
@@ -140,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            minimumSize: Size(100, 40),
+                            minimumSize: const Size(100, 40),
                             backgroundColor: kblue,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18))),
@@ -179,12 +178,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final profileController = Get.find<ProfileController>();
   final authController = Get.find<AuthController>();
+  final postsController = Get.find<PostsController>();
 
   @override
   void initState() {
     super.initState();
     profileController.getEducationalSkillsApi();
     profileController.getProfile();
+    postsController.getAllPost();
   }
 
   final fromDateController = TextEditingController();
@@ -226,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary: const Color.fromARGB(255, 42, 59, 158),
+                  foregroundColor: const Color.fromARGB(255, 42, 59, 158),
                 ),
               ),
             ),
@@ -266,7 +267,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary: const Color.fromARGB(255, 42, 59, 158),
+                  foregroundColor: const Color.fromARGB(255, 42, 59, 158),
                 ),
               ),
             ),
@@ -423,7 +424,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Stack(children: [
                 Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 150,
                       width: size.width,
                       child: Row(
@@ -453,9 +454,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       right: 10,
                       child: InkWell(
                         onTap: () async {
-                          final ImagePicker _picker = ImagePicker();
+                          final ImagePicker picker = ImagePicker();
                           // Pick an image
-                          final XFile? timage = await _picker.pickImage(
+                          final XFile? timage = await picker.pickImage(
                               source: ImageSource.gallery);
 
                           final croppedImage = await ImageCropper().cropImage(
@@ -522,8 +523,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 boxShadow: const [
                                   BoxShadow(
                                       blurRadius: 2,
-                                      color: const Color.fromARGB(
-                                          255, 228, 227, 227))
+                                      color: Color.fromARGB(255, 228, 227, 227))
                                 ],
                                 borderRadius: BorderRadius.circular(50)),
                             child: profileController.isLoading.isTrue
@@ -550,7 +550,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               ),
                                       ),
                           ),
-                          Container(
+                          SizedBox(
                               height: 100,
                               width: 100,
                               child: ClipRRect(
@@ -569,9 +569,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.only(left: 155, top: 8),
                       child: InkWell(
                         onTap: () async {
-                          final ImagePicker _picker = ImagePicker();
+                          final ImagePicker picker = ImagePicker();
                           // Pick an image
-                          final XFile? timage = await _picker.pickImage(
+                          final XFile? timage = await picker.pickImage(
                               source: ImageSource.gallery);
 
                           final croppedImage = await ImageCropper().cropImage(
@@ -607,9 +607,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           profileController.updateProfilePic(
                               media: File(croppedFile.path));
                         },
-                        child: Container(
+                        child: const SizedBox(
                           height: 24.5,
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                               radius: 30,
                               backgroundImage:
                                   AssetImage('assets/images/profileicon.png'),
@@ -634,18 +634,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        profileController.profileData.first.departmentName ==
-                                "Others"
-                            ? Text(profileController
-                                    .profileData.first.user.otherDepartment)
-                                .animate()
-                                .fade()
-                                .scale()
-                            : Text(profileController
-                                    .profileData.first.departmentName)
-                                .animate()
-                                .fade()
-                                .scale(),
+                        Text(postsController.profileData.first.userType)
+                            .animate()
+                            .fade()
+                            .scale(),
+                        // profileController.profileData.first.departmentName ==
+                        //         "Others"
+                        //     ? Text(profileController
+                        //             .profileData.first.user.otherDepartment)
+                        //         .animate()
+                        //         .fade()
+                        //         .scale()
+                        //     : Text(profileController
+                        //             .profileData.first.departmentName)
+                        //         .animate()
+                        //         .fade()
+                        //         .scale(),
                       ],
                     ),
               // Padding(
@@ -677,7 +681,7 @@ class _ProfilePageState extends State<ProfilePage> {
               // profileController.profileData.isEmpty
               //     ? Container()
               //   :
-              Column(
+              const Column(
                 children: [
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -709,7 +713,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   //     // )
                   //   ],
                   // ),
-                  const SizedBox(
+                  SizedBox(
                     height: 8,
                   ),
                   // Row(
@@ -883,18 +887,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(right: 10),
                     child: Row(
                       children: [
-                         InkWell(
-                          onTap: (){
-                           // _showDialog();
-                           educationPopup();
-                          },
-                          child: const Icon(Icons.add,color: Colors.grey,)),
-                         const SizedBox(width: 20,),
-                         InkWell(
-                          onTap: (){
-                            Get.to(const EducationSkillsUpdatePage());
-                          },
-                          child: const Icon(Icons.edit,size: 20,color: Colors.grey,)),
+                        InkWell(
+                            onTap: () {
+                              // _showDialog();
+                              educationPopup();
+                            },
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.grey,
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Get.to(const EducationSkillsUpdatePage());
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              size: 20,
+                              color: Colors.grey,
+                            )),
                       ],
                     ),
                   ),
@@ -1065,7 +1078,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
-                  child: Container(
+                  child: SizedBox(
                     width: size.width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1080,13 +1093,31 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  profileController.profileData.first
-                                      .positions[i].companyName
-                                      .toUpperCase(),
-                                  style: primaryfont.copyWith(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      profileController.profileData.first
+                                          .positions[i].companyName
+                                          .toUpperCase(),
+                                      style: primaryfont.copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 5),
+                                      child: InkWell(
+                                          onTap: () {
+                                            Get.to( SettingProfilePage());
+                                          },
+                                          child: const Icon(
+                                            Icons.edit,
+                                            size: 20,
+                                            color: Colors.grey,
+                                          )),
+                                    ),
+                                  ],
                                 ),
                                 Text(
                                   profileController.profileData.first
@@ -1152,7 +1183,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-                  //Icon(Icons.add),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: InkWell(
@@ -1334,7 +1364,7 @@ class _ProfilePageState extends State<ProfilePage> {
   var durationController = TextEditingController();
   var courseController = TextEditingController();
   //var certificateController = TextEditingController();
-  
+
   Widget buildDropDownButton() {
     return Container(
       child: GetBuilder<ProfileController>(builder: (_) {
@@ -1349,7 +1379,7 @@ class _ProfilePageState extends State<ProfilePage> {
               dropdownColor: Colors.white,
               value: profileController.selectedCategory,
               hint: const Text("Select"),
-              items: ['10th', '12th', 'UG', 'PG','Certificate / Others']
+              items: ['10th', '12th', 'UG', 'PG', 'Certificate / Others']
                   .map((String value) => DropdownMenuItem(
                         value: value,
                         child: Row(
@@ -1374,250 +1404,263 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-
-   
-
-   educationPopup(){
+  educationPopup() {
     showDialog(
-              context: context,
-                            builder: (BuildContext context) {
-                              return Obx( () =>
-                                 AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        18.0), // Adjust the radius as needed
-                                  ),
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text('Fill Your Education Details'),
-                                      InkWell(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Icon(
-                                            Icons.close,
-                                            color: Colors.red[500],
-                                          ))
-                                    ],
-                                  ),
-                                  content:const Text('Choose your education and update the required details.'),
-                                  actions: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 20, left: 10, right: 10),
-                                      child: Column(
-                                        children: [
-                                          //  ksizedbox10,
-                                          Container(
-                                  height: 56,
-                                  child: DropdownSearch<String>(
-                                    itemAsString: (String u) => u,
-                                    popupProps: PopupProps.menu(
-                                      showSelectedItems: false,
-                                      showSearchBox: true,
-                                      menuProps: MenuProps(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      searchFieldProps: const TextFieldProps(),
-                                    ),
-                                    items: educationList,
-                                    dropdownDecoratorProps:
-                                        DropDownDecoratorProps(
-                                      dropdownSearchDecoration: InputDecoration(
-                                          // labelText: "Department *",
-                                          hintText: "Select education",
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15))),
-                                    ),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        profileController.educationlist(value);
-                                        standardsController.text = value.toString();
-                                      });
-                                    },
-                                    // selectedItem: selectedState,
-                                  ),
-                                ),          
-                                          if(profileController.educationlist.value == "10th" || profileController.educationlist.value == "12th")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "10th" || profileController.educationlist.value == "12th")
-                                          TextFormFieldWidget(
-                                            labeltext: 'School name',
-                                            controller: schoolController,
-                                          ),
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG" || profileController.educationlist.value == "PUC")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG" || profileController.educationlist.value == "PUC")
-                                          TextFormFieldWidget(
-                                            controller: schoolController,
-                                            labeltext: 'University name',
-                                          ),
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG")
-                                          TextFormFieldWidget(
-                                            controller: collagepgController,
-                                            labeltext: 'College',
-                                          ),
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                          ksizedbox10,
-                                           if(profileController.educationlist.value == "Certificates / Others")
-                                          TextFormFieldWidget(
-                                          controller: schoolController,
-                                          labeltext: 'Institution Name',
-                                        ),
-                                         if(profileController.educationlist.value == "Certificates / Others")
-                                        ksizedbox10,
-                                         if(profileController.educationlist.value == "Certificates / Others")
-                                        TextFormFieldWidget(
-                                          controller: courseController,
-                                          labeltext: 'Course Name',
-                                        ),
-                                         if(profileController.educationlist.value == "Certificates / Others")
-                                        ksizedbox10,
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                           TextFormFieldWidget(
-                                            controller: durationController,
-                                            labeltext: 'Duration',
-                                          ),
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                          TextFormFieldWidget(
-                                            labeltext: 'Course / Certificate',
-                                            controller: certificateController,
-                                          ),
-                                          // TextFormFieldWidget(
-                                          //   labeltext: 'Standards',
-                                          //   controller: standardsController,
-                                          // ),
-                                          // ksizedbox10,
-                                          ksizedbox10,
-                                          TextFormFieldWidget(
-                                            labeltext: 'City',
-                                            controller: cityController,
-                                          ),
-                                          ksizedbox10,
-                                          TextFormFieldWidget(
-                                            labeltext: ' State',
-                                            controller: stateController,
-                                          ),
-                                          ksizedbox10,
-                                          GetBuilder<AuthController>(
-                                            builder: (_) {
-                                              return Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  InkWell(
-                                                    onTap: (){
-                                                      _showStartDate(context);
-                                                    },
-                                                    child: Container(
-                                                      width: 120,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey[100],
-                                                        borderRadius: BorderRadius.circular(10)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          selectdt
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'To',
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: kgrey),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      _showEndDate(context);
-                                                    },
-                                                    child: Container(
-                                                      width: 120,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey[100],
-                                                        borderRadius: BorderRadius.circular(10)
-                                                      ),
-                                                      child: Center(
-                                                        child: selectdt1 == formatDate(
-                                                        DateTime(DateTime.now().year, 
-                                                        DateTime.now().month, DateTime.now().day),
-                                                        [yyyy, "-", mm, "-", dd])
-                                                         ? const Text("Till Date") : Text(selectdt1),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            }
-                                          ),
-                                          ksizedbox10,
-                                          InkWell(
-                                            onTap: () {
-                                              var flag = "";
-                                              if(standardsController.text == "10th" || standardsController.text == "12th"){
-                                                flag = "student";
-                                              }else if(standardsController.text == "UG" || standardsController.text == "PG" || standardsController.text == "PUC"){
-                                                flag = "college";
-                                              }else{
-                                                flag = "institute";
-                                              }
-                                              
-                                              print(
-                                                  "-------->> chack values <<---------");
-                                              print(schoolController.text);
-                                              print(standardsController.text);
-                                              authController.addEducationalSkills(
-                                                  flag: flag,
-                                                  institutionname: schoolController.text,
-                                                  userId: "",
-                                                  educationtitle: standardsController.text,
-                                                  city: cityController.text,
-                                                  state: stateController.text,
-                                                  frombatch: selectdt,
-                                                  tilldate: selectdt1 == formatDate(
-                                                  DateTime(DateTime.now().year, 
-                                                  DateTime.now().month, DateTime.now().day),
-                                                  [yyyy, "-", mm, "-", dd]) ? "Till Date" : selectdt,
-                                                  educationdescription: certificateController.text);
-                                                 profileController.getEducationalSkillsApi(); 
-                                              //   Get.back();
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 48,
-                                              decoration: BoxDecoration(
-                                                  color: kblue,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16)),
-                                              child: Center(
-                                                  child: Text(
-                                                'Submit',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 16,
-                                                    color: kwhite),
-                                              )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
+      context: context,
+      builder: (BuildContext context) {
+        return Obx(
+          () => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(18.0), // Adjust the radius as needed
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Fill Your Education Details'),
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.red[500],
+                    ))
+              ],
+            ),
+            content: const Text(
+                'Choose your education and update the required details.'),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
+                child: Column(
+                  children: [
+                    //  ksizedbox10,
+                    SizedBox(
+                      height: 56,
+                      child: DropdownSearch<String>(
+                        itemAsString: (String u) => u,
+                        popupProps: PopupProps.menu(
+                          showSelectedItems: false,
+                          showSearchBox: true,
+                          menuProps: MenuProps(
+                              borderRadius: BorderRadius.circular(10)),
+                          searchFieldProps: const TextFieldProps(),
+                        ),
+                        items: educationList,
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                              // labelText: "Department *",
+                              hintText: "Select education",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15))),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            profileController.educationlist(value);
+                            standardsController.text = value.toString();
+                          });
+                        },
+                        // selectedItem: selectedState,
+                      ),
+                    ),
+                    if (profileController.educationlist.value == "10th" ||
+                        profileController.educationlist.value == "12th")
+                      ksizedbox10,
+                    if (profileController.educationlist.value == "10th" ||
+                        profileController.educationlist.value == "12th")
+                      TextFormFieldWidget(
+                        labeltext: 'School name',
+                        controller: schoolController,
+                      ),
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG" ||
+                        profileController.educationlist.value == "PUC")
+                      ksizedbox10,
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG" ||
+                        profileController.educationlist.value == "PUC")
+                      TextFormFieldWidget(
+                        controller: schoolController,
+                        labeltext: 'University name',
+                      ),
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG")
+                      ksizedbox10,
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG")
+                      TextFormFieldWidget(
+                        controller: collagepgController,
+                        labeltext: 'College',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        controller: schoolController,
+                        labeltext: 'Institution Name',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        controller: courseController,
+                        labeltext: 'Course Name',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        controller: durationController,
+                        labeltext: 'Duration',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        labeltext: 'Course / Certificate',
+                        controller: certificateController,
+                      ),
+                    // TextFormFieldWidget(
+                    //   labeltext: 'Standards',
+                    //   controller: standardsController,
+                    // ),
+                    // ksizedbox10,
+                    ksizedbox10,
+                    TextFormFieldWidget(
+                      labeltext: 'City',
+                      controller: cityController,
+                    ),
+                    ksizedbox10,
+                    TextFormFieldWidget(
+                      labeltext: ' State',
+                      controller: stateController,
+                    ),
+                    ksizedbox10,
+                    GetBuilder<AuthController>(builder: (_) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _showStartDate(context);
                             },
-                          );
-   }
+                            child: Container(
+                              width: 120,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: Text(selectdt),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'To',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: kgrey),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              _showEndDate(context);
+                            },
+                            child: Container(
+                              width: 120,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: selectdt1 ==
+                                        formatDate(
+                                            DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day),
+                                            [yyyy, "-", mm, "-", dd])
+                                    ? const Text("Till Date")
+                                    : Text(selectdt1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                    ksizedbox10,
+                    InkWell(
+                      onTap: () {
+                        var flag = "";
+                        if (standardsController.text == "10th" ||
+                            standardsController.text == "12th") {
+                          flag = "student";
+                        } else if (standardsController.text == "UG" ||
+                            standardsController.text == "PG" ||
+                            standardsController.text == "PUC") {
+                          flag = "college";
+                        } else {
+                          flag = "institute";
+                        }
+
+                        print("-------->> chack values <<---------");
+                        print(schoolController.text);
+                        print(standardsController.text);
+                        authController.addEducationalSkills(
+                            flag: flag,
+                            institutionname: schoolController.text,
+                            userId: "",
+                            educationtitle: standardsController.text,
+                            city: cityController.text,
+                            state: stateController.text,
+                            frombatch: selectdt,
+                            tilldate: selectdt1 ==
+                                    formatDate(
+                                        DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day),
+                                        [yyyy, "-", mm, "-", dd])
+                                ? "Till Date"
+                                : selectdt,
+                            educationdescription: certificateController.text);
+                        profileController.getEducationalSkillsApi();
+                        //   Get.back();
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48,
+                        decoration: BoxDecoration(
+                            color: kblue,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Center(
+                            child: Text(
+                          'Submit',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: kwhite),
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   _showDialog() {
     showDialog(
@@ -1670,7 +1713,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                 scrollable: true,
+                                scrollable: true,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       18.0), // Adjust the radius as needed
@@ -1845,7 +1888,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                 scrollable: true,
+                                scrollable: true,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       18.0), // Adjust the radius as needed

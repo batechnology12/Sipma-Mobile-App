@@ -16,11 +16,11 @@ class _InternetPageState extends State<InternetPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/internetimage22.png'),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text('Check Your Internet',style: TextStyle(fontSize: 18),),
-            Text('Connection',style: TextStyle(fontSize: 18),)
+            const Text('Check Your Internet',style: TextStyle(fontSize: 18),),
+            const Text('Connection',style: TextStyle(fontSize: 18),)
           ],
         ),
       ),

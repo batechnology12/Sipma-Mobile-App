@@ -6,15 +6,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/controllers/profile_controller.dart';
-import 'package:simpa/models/get_education_list_model.dart';
-import 'package:simpa/view/change_password.dart';
-import 'package:simpa/view/profile_sccuessful_page.dart';
+import 'package:simpa/view/profile_settings_view/Edit_profile_previous_company_data.dart';
 import 'package:simpa/view/profile_settings_view/add_new_skills_page.dart';
 import 'package:simpa/view/profile_settings_view/profile_add_new_possition_view.dart';
 import 'package:simpa/widgets/bottumnavigationbar.dart';
-import 'package:simpa/widgets/common_appbar.dart';
-import 'package:simpa/searchable_dropdown-master/lib/dropdown_search.dart'
-    as dp;
 
 class SettingProfilePage extends StatefulWidget {
   const SettingProfilePage({super.key});
@@ -36,7 +31,7 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
   var birthdayController = TextEditingController();
   final profileController = Get.find<ProfileController>();
 
-    var educationController = TextEditingController();
+  var educationController = TextEditingController();
   final authController = Get.find<AuthController>();
 
   var education;
@@ -67,7 +62,12 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
       emailController.text =
           profileController.profileData.first.user.officialEmail ?? "";
       setState(() {
-        selectedCategory = profileController.profileData.first.user.hisHer == "His"? "Mr": profileController.profileData.first.user.hisHer == "Her"? "Miss" : profileController.profileData.first.user.hisHer;
+        selectedCategory =
+            profileController.profileData.first.user.hisHer == "His"
+                ? "Mr"
+                : profileController.profileData.first.user.hisHer == "Her"
+                    ? "Miss"
+                    : profileController.profileData.first.user.hisHer;
         edHintText =
             profileController.profileData.first.user.education ?? "Education";
       });
@@ -151,13 +151,13 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
                       decoration:
                           BoxDecoration(shape: BoxShape.circle, color: kblue),
                       child: profileController.isLoading.isTrue
-                          ? Center(
+                          ? const Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(7.0),
-                                child: Container(
+                                padding: EdgeInsets.all(7.0),
+                                child: SizedBox(
                                   height: 25,
                                   width: 25,
-                                  child: const CircularProgressIndicator(
+                                  child: CircularProgressIndicator(
                                     strokeWidth: 3,
                                     color: Colors.white,
                                   ),
@@ -249,10 +249,10 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
                 ),
                 InkWell(
                   onTap: () async {
-                    final ImagePicker _picker = ImagePicker();
+                    final ImagePicker picker = ImagePicker();
                     // Pick an image
                     final XFile? timage =
-                        await _picker.pickImage(source: ImageSource.gallery);
+                        await picker.pickImage(source: ImageSource.gallery);
 
                     profileController.updateProfilePic(
                         media: File(timage!.path));
@@ -266,7 +266,7 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
                   height: 20,
                 ),
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: ListView(shrinkWrap: true, children: [
                       Column(
@@ -521,7 +521,7 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
                           //     ),
                           //   );
                           // }),
-                         const SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -594,7 +594,7 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
                           const SizedBox(
                             height: 3,
                           ),
-                           const SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -622,13 +622,39 @@ class _SettingProfilePageState extends State<SettingProfilePage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      profileController.profileData.first
-                                          .positions[i].companyName
-                                          .toUpperCase(),
-                                      style: primaryfont.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          profileController.profileData.first
+                                              .positions[i].companyName
+                                              .toUpperCase(),
+                                          style: primaryfont.copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: InkWell(
+                                              onTap: () {
+                                                Get.to(
+                                                    EditProfilePreviouscompanyDetails(
+                                                  postionlistid:
+                                                      profileController
+                                                          .profileData
+                                                          .first
+                                                          .positions[i]
+                                                          .id
+                                                          .toString(),
+                                                ));
+                                              },
+                                              child: const Icon(Icons.edit,
+                                                  size: 20,
+                                                  color: Colors.grey)),
+                                        ),
+                                      ],
                                     ),
                                     Text(
                                       profileController

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class GetFcmTokenApiService extends BaseApiService {
@@ -8,7 +7,7 @@ class GetFcmTokenApiService extends BaseApiService {
     dynamic responseJson;
     try {
       var dio = Dio();
-      var response = await dio.post(getFcmToken,
+      var response = await dio.post(getFcmTokenURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

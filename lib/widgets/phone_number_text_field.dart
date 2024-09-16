@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -66,7 +65,7 @@ class TextPhoneformfieldWidget extends StatelessWidget {
                     color: Color.fromARGB(0, 158, 158, 158), width: 2.0),
                 borderRadius: BorderRadius.circular(16.0),
               ),
-              contentPadding: EdgeInsets.fromLTRB(17.0, 8.0, 17.0, 7.0),
+              contentPadding: const EdgeInsets.fromLTRB(17.0, 8.0, 17.0, 7.0),
             ),
           ),
         ],

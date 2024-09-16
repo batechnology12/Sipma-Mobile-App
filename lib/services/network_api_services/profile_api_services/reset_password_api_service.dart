@@ -15,7 +15,7 @@ class ResetPwdApiServices extends BaseApiService {
       final prefs = await SharedPreferences.getInstance();
       String? mobileNumer = prefs.getString("mobile");
 
-      var response = await dio.post(resetPassword,
+      var response = await dio.post(resetPasswordURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

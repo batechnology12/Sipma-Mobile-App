@@ -1,12 +1,9 @@
 //import 'dart:js_util';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:simpa/controllers/posts_controller.dart';
 import 'package:simpa/view/public_profle_view/public_user_profile_view.dart';
 import 'package:simpa/widgets/bottumnavigationbar.dart';
@@ -44,7 +41,7 @@ class _NotoficationCommentViewState extends State<NotoficationCommentView> {
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: PreferredSize(child: appbar_leading(title : 'Friends',imageurl: 'assets/images/Vector3.png',), preferredSize: Size.fromHeight(55)),
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
           preferredSize: Size.fromHeight(55),
           child: appbar(
             title: 'Comments  ',

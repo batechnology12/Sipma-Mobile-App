@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
-import 'package:simpa/constands/message_types.dart';
-import 'package:simpa/controllers/posts_controller.dart';
 import 'package:simpa/controllers/profile_controller.dart';
-import 'package:simpa/models/chat_models.dart';
-import 'package:simpa/view/chat_view/view_message_screen.dart';
-import 'package:simpa/view/public_profle_view/public_profile_screen.dart';
 import 'package:simpa/view/public_profle_view/public_user_profile_view.dart';
-import 'package:simpa/view/search_page.dart';
-import 'package:simpa/widgets/bottumnavigationbar.dart';
-import 'package:simpa/widgets/home_containers.dart';
-import 'package:simpa/widgets/search_field.dart';
 
 //import '../widgets/appbar_friends.dart';
-import '../widgets/coments_widget.dart';
-import '../widgets/friend_request.dart';
 import 'search_friends/search_friends_view.dart';
 
 class Friends_screen extends StatefulWidget {
-  Friends_screen({super.key});
+  const Friends_screen({super.key});
 
   @override
   State<Friends_screen> createState() => _Friends_screenState();
@@ -65,7 +52,7 @@ class _Friends_screenState extends State<Friends_screen> {
                   actions: [
                     GestureDetector(
                         onTap: () {
-                          Get.to(SearchFriends());
+                          Get.to(const SearchFriends());
                         },
                         child: ksearchblack),
                     kwidth10
@@ -106,7 +93,7 @@ class _Friends_screenState extends State<Friends_screen> {
                     thickness: 1,
                   ),
                 ),
-                ksizedbox10,
+                // ksizedbox10,
                 TabBar(
                     automaticIndicatorColorAdjustment: true,
                     //  isScrollable: true,
@@ -126,16 +113,21 @@ class _Friends_screenState extends State<Friends_screen> {
                         profileController.getMyFriendRequestList();
                       }
                     },
-                    tabs: [
+                    tabs: const [
                       Tab(
-                        text: "Your Connects",
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10), // Add padding here
+                          child: Text("Your Connects"),
+                        ),
                       ),
-                      // Tab(
-                      //   text: "Friend Request",
-                      // ),
                       Tab(
-                        text: "Request",
-                      )
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10), // Add padding here
+                          child: Text("Request"),
+                        ),
+                      ),
                     ]),
               ],
             ),
@@ -297,7 +289,7 @@ class _Friends_screenState extends State<Friends_screen> {
                                                       .profile),
                                             ),
                                           ),
-                                    Container(
+                                    SizedBox(
                                       width: 110.h,
                                       height: 50,
                                       child: Column(
@@ -337,6 +329,12 @@ class _Friends_screenState extends State<Friends_screen> {
                                             status: "1");
                                       },
                                       child: Container(
+                                        height: 30,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(17),
+                                            color: kblue),
                                         child: Center(
                                             child: Text(
                                           "Accept",
@@ -344,12 +342,6 @@ class _Friends_screenState extends State<Friends_screen> {
                                               color: kwhite,
                                               fontWeight: FontWeight.w600),
                                         )),
-                                        height: 30,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(17),
-                                            color: kblue),
                                       ),
                                     ),
                                     kwidth10,
@@ -364,13 +356,6 @@ class _Friends_screenState extends State<Friends_screen> {
                                             status: "2");
                                       },
                                       child: Container(
-                                        child: Center(
-                                            child: Text(
-                                          "Remove",
-                                          style: TextStyle(
-                                              color: kblue,
-                                              fontWeight: FontWeight.w600),
-                                        )),
                                         height: 30,
                                         width: 80,
                                         decoration: BoxDecoration(
@@ -379,6 +364,13 @@ class _Friends_screenState extends State<Friends_screen> {
                                             borderRadius:
                                                 BorderRadius.circular(17),
                                             color: kwhite),
+                                        child: Center(
+                                            child: Text(
+                                          "Remove",
+                                          style: TextStyle(
+                                              color: kblue,
+                                              fontWeight: FontWeight.w600),
+                                        )),
                                       ),
                                     ),
                                   ],

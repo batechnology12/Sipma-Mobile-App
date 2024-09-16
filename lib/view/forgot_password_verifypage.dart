@@ -1,13 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:simpa/controllers/profile_controller.dart';
-import 'package:simpa/view/create_new_password.dart';
 
 import '../constands/constands.dart';
 import '../widgets/bottumnavigationbar.dart';

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,7 +17,7 @@ import '../view/notification_screen.dart';
 
 class BottomNavigationBarExample extends StatefulWidget {
   int index;
-  BottomNavigationBarExample({this.index = 0});
+  BottomNavigationBarExample({super.key, this.index = 0});
   @override
   _BottomNavigationBarExampleState createState() =>
       _BottomNavigationBarExampleState();
@@ -35,11 +34,11 @@ class _BottomNavigationBarExampleState
 
   // List of pages to be displayed in the bottom navigation bar
   final List<Widget> _pages = [
-    Homepage(), // Replace with your own widget
-    Friends_screen(),
-    ChatListView(),
-    Notificaton_screen(),
-    ProfilePage(), // Replace with your own widget
+    const Homepage(), // Replace with your own widget
+    const Friends_screen(),
+    const ChatListView(),
+    const Notificaton_screen(),
+    const ProfilePage(), // Replace with your own widget
   ];
 
   @override
@@ -282,7 +281,7 @@ class _BottomNavigationBarExampleState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Container(
+            content: SizedBox(
               height: 90,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,26 +298,25 @@ class _BottomNavigationBarExampleState
                           },
                           style: ElevatedButton.styleFrom(
                               textStyle:
-                                  primaryfont.copyWith(color: Colors.white),
-                              primary: Colors.red.shade800),
+                                  primaryfont.copyWith(color: Colors.white), backgroundColor: Colors.red.shade800),
                           child: Text(
                             "Yes",
                             style: primaryfont.copyWith(color: Colors.white),
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Expanded(
                           child: ElevatedButton(
                         onPressed: () {
                           print('no selected');
                           Navigator.of(context).pop();
                         },
-                        child:
-                            Text("No", style: TextStyle(color: Colors.black)),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
+                          backgroundColor: Colors.white,
                         ),
+                        child:
+                            const Text("No", style: TextStyle(color: Colors.black)),
                       ))
                     ],
                   )
@@ -332,10 +330,12 @@ class _BottomNavigationBarExampleState
 
 // Replace these PageOne, PageTwo, PageThree widgets with your own widgets
 class PageOne extends StatelessWidget {
+  const PageOne({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Page One').animate().fade().scale(),
+      child: const Text('Page One').animate().fade().scale(),
     );
   }
 }

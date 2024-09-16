@@ -11,7 +11,6 @@ import 'package:simpa/models/get_all_post_modals.dart';
 import 'package:simpa/models/post_like_list_model.dart';
 import 'package:simpa/models/profile_model.dart';
 import 'package:simpa/models/search_post_modal.dart';
-import 'package:simpa/models/search_post_modals.dart';
 import 'package:simpa/services/network_api_services/post_api_services/filter_api_services.dart';
 import 'package:simpa/services/network_api_services/post_api_services/get_all_post_api_services.dart';
 import 'package:simpa/services/network_api_services/post_api_services/get_profile_api_services.dart';
@@ -70,7 +69,7 @@ class PostsController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("auth_token", "null");
        await FirebaseMessaging.instance.deleteToken();
-      Get.to(loginpage());
+      Get.to(const loginpage());
     }
     update();
   }
@@ -173,7 +172,7 @@ class PostsController extends GetxController {
     isLoading(false);
 
     if (response.statusCode == 201) {
-      Get.off(postsplash());
+      Get.off(const postsplash());
       Get.rawSnackbar(
         messageText: const Text(
           "Uploaded successfull",
@@ -206,7 +205,7 @@ class PostsController extends GetxController {
     isLoading(false);
 
     if (response.statusCode == 201) {
-      Get.off(postsplash());
+      Get.off(const postsplash());
       Get.rawSnackbar(
         messageText: const Text(
           "Uploaded successfull",

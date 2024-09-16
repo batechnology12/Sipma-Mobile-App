@@ -12,7 +12,7 @@ class LikeButtonWidget extends StatefulWidget {
   int likeCount;
   int isNormal;
   LikeButtonWidget(
-      {required this.isliked,
+      {super.key, required this.isliked,
       required this.postId,
       required this.indexOfPost,
       this.isNormal = 0,
@@ -82,8 +82,8 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget> {
         onTap: onLikeButtonTapped,
         isLiked: widget.isliked,
         circleColor:
-            CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
-        bubblesColor: BubblesColor(
+            const CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
+        bubblesColor: const BubblesColor(
           dotPrimaryColor: Color(0xff33b5e5),
           dotSecondaryColor: Color(0xff0099cc),
         ),
@@ -104,11 +104,12 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget> {
               'Like',
               style: TextStyle(color: color),
             );
-          } else
+          } else {
             result = Text(
-              count! >= 1000 ? (count / 1000.0).toStringAsFixed(1) + 'k' : text,
+              count! >= 1000 ? '${(count / 1000.0).toStringAsFixed(1)}k' : text,
               style: TextStyle(color: color),
             );
+          }
           return result;
         },
       ),

@@ -34,7 +34,6 @@ class ProfileModel {
     required this.positions,
     required this.departmentName,
     required this.skills,
-   
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
@@ -45,8 +44,7 @@ class ProfileModel {
         isFriend: json["is_friend"],
         totalLikes: json["total_likes"],
         totalPosts: json["total_posts"],
-       
-        departmentName: json["department_name"]?? "",
+        departmentName: json["department_name"] ?? "",
         positions: List<Position>.from(
             json["positions"].map((x) => Position.fromJson(x))),
         skills: List<Skill>.from(json["skills"].map((x) => Skill.fromJson(x))),
@@ -138,33 +136,33 @@ class User {
         id: json["id"],
         roleId: json["role_id"],
         name: json["name"],
-        userType: json["user_type"]?? "null",
+        userType: json["user_type"] ?? "null",
         hisHer: json["his_her"],
-        education: json["education"]?? "",
+        education: json["education"] ?? "",
         email: json["email"],
         mobile: json["mobile"],
         otherDepartment: json['other_department'],
-        backgroundImage: json["backround_image"]?? "",
+        backgroundImage: json["backround_image"] ?? "",
         isVerrifiedMobile: json["is_verrified_mobile"],
         lastName: json["last_name"] ?? "",
         userName: json["user_name"],
         otp: json["otp"],
-        currentCompany: json["current_company"]?? "",
-        department: json["department"]?? "",
-        designation: json["designation"]?? "",
-        qualification: json["qualification"]?? "",
-        officialEmail: json["official_email"]?? "",
-        profilePicture: json["profile_picture"]?? "",
-        clientSecret: json["client_secret"]?? "",
-        clientId: json["client_id"]?? "",
-        keyName: json["Key_name"]?? "",
+        currentCompany: json["current_company"] ?? "",
+        department: json["department"] ?? "",
+        designation: json["designation"] ?? "",
+        qualification: json["qualification"] ?? "",
+        officialEmail: json["official_email"] ?? "",
+        profilePicture: json["profile_picture"] ?? "",
+        clientSecret: json["client_secret"] ?? "",
+        clientId: json["client_id"] ?? "",
+        keyName: json["Key_name"] ?? "",
         keyStatus: json["Key_status"],
         emailVerifiedAt: json["email_verified_at"],
-        address: json["address"]?? "",
-        bio: json["bio"]?? "",
+        address: json["address"] ?? "",
+        bio: json["bio"] ?? "",
         pincode: json["pincode"],
         city: json["city"],
-        state: json["state"]?? "",
+        state: json["state"] ?? "",
         status: json["status"].toString(),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -205,7 +203,7 @@ class User {
 
 class Position {
   int id;
-  int userId;
+  String userId;
   String title;
   String employmentType;
   String companyName;
@@ -271,7 +269,7 @@ class Position {
 
 class Skill {
   int id;
-  int userId;
+  String userId;
   String name;
   DateTime createdAt;
   DateTime updatedAt;

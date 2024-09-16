@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class appbar extends StatelessWidget {
   const appbar({super.key, required this.title});
@@ -10,7 +8,7 @@ class appbar extends StatelessWidget {
     return AppBar(
       title: Text(
         title,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.white,
     );

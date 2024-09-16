@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simpa/constands/constands.dart';
@@ -46,11 +44,11 @@ class _createpostState extends State<createpost> {
                       decoration: BoxDecoration(
                           color: kblue,
                           borderRadius: BorderRadiusDirectional.circular(18)),
-                      child: Center(
-                          child: Container(
+                      child: const Center(
+                          child: SizedBox(
                         height: 20,
                         width: 20,
-                        child: const CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           color: Colors.white,
                         ),
                       )),
@@ -130,7 +128,7 @@ class _createpostState extends State<createpost> {
                 TextFormField(
                   controller: textController,
                   minLines: 4,
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontSize: 14,
                         color: Colors.black,
                         fontWeight: FontWeight.w300,
@@ -181,10 +179,10 @@ class _createpostState extends State<createpost> {
                 ksizedbox40,
                 InkWell(
                   onTap: () async {
-                    final ImagePicker _picker = ImagePicker();
+                    final ImagePicker picker = ImagePicker();
                     // Pick an image
                     final XFile? timage =
-                        await _picker.pickImage(source: ImageSource.gallery);
+                        await picker.pickImage(source: ImageSource.gallery);
 
                     final croppedImage = await ImageCropper().cropImage(
                       sourcePath: timage!.path,

@@ -6,15 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/controllers/profile_controller.dart';
-import 'package:simpa/models/get_education_list_model.dart';
-import 'package:simpa/view/change_password.dart';
-import 'package:simpa/view/profile_sccuessful_page.dart';
 import 'package:simpa/view/profile_settings_view/add_new_skills_page.dart';
 import 'package:simpa/view/profile_settings_view/profile_add_new_possition_view.dart';
-import 'package:simpa/widgets/bottumnavigationbar.dart';
-import 'package:simpa/widgets/common_appbar.dart';
-import 'package:simpa/searchable_dropdown-master/lib/dropdown_search.dart'
-    as dp;
 
 class SettingProfileMadatoryPage extends StatefulWidget {
   const SettingProfileMadatoryPage({super.key});
@@ -62,7 +55,8 @@ class _SettingProfilePageState extends State<SettingProfileMadatoryPage> {
       // selectedCategory =
 
       //     profileController.profileData.first.user. ?? "";
-      profileController.tBioController.text = profileController.profileData.first.user.bio ?? "";
+      profileController.tBioController.text =
+          profileController.profileData.first.user.bio ?? "";
       positionController.text =
           profileController.profileData.first.user.designation ?? "";
       numberController.text = profileController.profileData.first.user.mobile;
@@ -136,13 +130,13 @@ class _SettingProfilePageState extends State<SettingProfileMadatoryPage> {
                 return Row(
                   children: [
                     profileController.isLoading.isTrue
-                        ? Center(
+                        ? const Center(
                             child: Padding(
-                              padding: const EdgeInsets.all(7.0),
-                              child: Container(
+                              padding: EdgeInsets.all(7.0),
+                              child: SizedBox(
                                 height: 25,
                                 width: 25,
-                                child: const CircularProgressIndicator(
+                                child: CircularProgressIndicator(
                                   strokeWidth: 3,
                                   color: Colors.white,
                                 ),
@@ -151,72 +145,87 @@ class _SettingProfilePageState extends State<SettingProfileMadatoryPage> {
                           )
                         : Padding(
                             padding: const EdgeInsets.only(right: 7),
-                            child: profileController.profileData.isEmpty ? Container() :
-                            profileController.profileData.first.user.userType == "Professional" ? TextButton(
-                                onPressed: () {
-                                  if (nameController.text.isNotEmpty &&
-                                      lastNameController.text.isNotEmpty &&
-                                      emailController.text.isNotEmpty &&
-                                      numberController.text.isNotEmpty &&
-                                      profileController.profileData.first
-                                          .positions.isNotEmpty &&
-                                      profileController.profileData.first.skills
-                                          .isNotEmpty) {
-                                    profileController.updateUserDetails(
-                                        name: nameController.text,
-                                        lastName: lastNameController.text,
-                                        bio: profileController
-                                            .tBioController.text,
-                                        designation: positionController.text,
-                                        hisOrHer: profileController
-                                                .selectedCategory ??
-                                            "",
-                                        email: emailController.text,
-                                        education: educationController.text,
-                                        mobile: numberController.text);
-                                  } else {
-                                    Get.rawSnackbar(
-                                      messageText: const Text(
-                                        "Fill All the fields",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                    );
-                                  }
-                                },
-                                child: const Text("Submit"),
-                                ) : TextButton(
-                                onPressed: () {
-                                  if (nameController.text.isNotEmpty &&
-                                      lastNameController.text.isNotEmpty &&
-                                      emailController.text.isNotEmpty &&
-                                      numberController.text.isNotEmpty
-                                      ) {
-                                    profileController.updateUserDetails(
-                                        name: nameController.text,
-                                        lastName: lastNameController.text,
-                                        bio: profileController
-                                            .tBioController.text,
-                                        designation: positionController.text,
-                                        hisOrHer: profileController
-                                                .selectedCategory ??
-                                            "",
-                                        email: emailController.text,
-                                        education: educationController.text,
-                                        mobile: numberController.text);
-                                  } else {
-                                    Get.rawSnackbar(
-                                      messageText: const Text(
-                                        "Fill All the fields",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                    );
-                                  }
-                                },
-                                child: const Text("Submit"),
-                                )
-                                ),
+                            child: profileController.profileData.isEmpty
+                                ? Container()
+                                : profileController
+                                            .profileData.first.user.userType ==
+                                        "Professional"
+                                    ? TextButton(
+                                        onPressed: () {
+                                          if (nameController.text.isNotEmpty &&
+                                              lastNameController
+                                                  .text.isNotEmpty &&
+                                              emailController.text.isNotEmpty &&
+                                              numberController
+                                                  .text.isNotEmpty &&
+                                              profileController.profileData
+                                                  .first.positions.isNotEmpty &&
+                                              profileController.profileData
+                                                  .first.skills.isNotEmpty) {
+                                            profileController.updateUserDetails(
+                                                name: nameController.text,
+                                                lastName:
+                                                    lastNameController.text,
+                                                bio: profileController
+                                                    .tBioController.text,
+                                                designation:
+                                                    positionController.text,
+                                                hisOrHer: profileController
+                                                        .selectedCategory ??
+                                                    "",
+                                                email: emailController.text,
+                                                education:
+                                                    educationController.text,
+                                                mobile: numberController.text);
+                                          } else {
+                                            Get.rawSnackbar(
+                                              messageText: const Text(
+                                                "Fill All the fields",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              backgroundColor: Colors.red,
+                                            );
+                                          }
+                                        },
+                                        child: const Text("Submit"),
+                                      )
+                                    : TextButton(
+                                        onPressed: () {
+                                          if (nameController.text.isNotEmpty &&
+                                              lastNameController
+                                                  .text.isNotEmpty &&
+                                              emailController.text.isNotEmpty &&
+                                              numberController
+                                                  .text.isNotEmpty) {
+                                            profileController.updateUserDetails(
+                                                name: nameController.text,
+                                                lastName:
+                                                    lastNameController.text,
+                                                bio: profileController
+                                                    .tBioController.text,
+                                                designation:
+                                                    positionController.text,
+                                                hisOrHer: profileController
+                                                        .selectedCategory ??
+                                                    "",
+                                                email: emailController.text,
+                                                education:
+                                                    educationController.text,
+                                                mobile: numberController.text);
+                                          } else {
+                                            Get.rawSnackbar(
+                                              messageText: const Text(
+                                                "Fill All the fields",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              backgroundColor: Colors.red,
+                                            );
+                                          }
+                                        },
+                                        child: const Text("Submit"),
+                                      )),
                   ],
                 );
               }),
@@ -266,10 +275,10 @@ class _SettingProfilePageState extends State<SettingProfileMadatoryPage> {
               ),
               InkWell(
                 onTap: () async {
-                  final ImagePicker _picker = ImagePicker();
+                  final ImagePicker picker = ImagePicker();
                   // Pick an image
                   final XFile? timage =
-                      await _picker.pickImage(source: ImageSource.gallery);
+                      await picker.pickImage(source: ImageSource.gallery);
 
                   profileController.updateProfilePic(media: File(timage!.path));
                 },
@@ -282,7 +291,7 @@ class _SettingProfilePageState extends State<SettingProfileMadatoryPage> {
                 height: 20,
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: ListView(shrinkWrap: true, children: [
                     Column(
@@ -533,66 +542,73 @@ class _SettingProfilePageState extends State<SettingProfileMadatoryPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        if(profileController.profileData.first.user.currentCompany != "")
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        if (profileController
+                                .profileData.first.user.currentCompany !=
+                            "")
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Current Position",
+                                  style: primaryfont.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (profileController
+                                .profileData.first.user.currentCompany !=
+                            "")
+                          Row(
                             children: [
-                              Text(
-                                "Current Position",
-                                style: primaryfont.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 15, top: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      profileController.profileData.first.user
+                                          .currentCompany,
+                                      style: primaryfont.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Text(
+                                      profileController.profileData.first
+                                                  .departmentName ==
+                                              "Others"
+                                          ? profileController.profileData.first
+                                              .user.otherDepartment
+                                          : profileController
+                                              .profileData.first.departmentName,
+                                      style: primaryfont.copyWith(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      profileController
+                                          .profileData.first.user.designation,
+                                      style: primaryfont.copyWith(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      profileController
+                                          .profileData.first.user.officialEmail,
+                                      style: primaryfont.copyWith(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        if(profileController.profileData.first.user.currentCompany != "")
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15, top: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    profileController.profileData.first.user.currentCompany,
-                                    style: primaryfont.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    profileController.profileData.first
-                                                .departmentName ==
-                                            "Others"
-                                        ? profileController.profileData.first
-                                            .user.otherDepartment
-                                        : profileController
-                                            .profileData.first.departmentName,
-                                    style: primaryfont.copyWith(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    profileController
-                                        .profileData.first.user.designation,
-                                    style: primaryfont.copyWith(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    profileController
-                                        .profileData.first.user.officialEmail,
-                                    style: primaryfont.copyWith(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
                         const SizedBox(
                           height: 3,
                         ),

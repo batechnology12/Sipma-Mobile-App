@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/models/register_model.dart';
 import 'package:simpa/widgets/password_text_field.dart';
@@ -11,7 +9,7 @@ import '../widgets/textfield.dart';
 import '../constands/constands.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -38,9 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     userNameController.addListener(checkUser);
   }
 
-  var primaryFont = TextStyle();
+  var primaryFont = const TextStyle();
 
-  bool isEmailVerified = true;
+  bool isEmailVerified = false;
+  Timer? emailVerificationTimer;
+  Timer? checkStatusTimer;
 
   popupClose() {}
 
@@ -104,14 +104,68 @@ class _RegisterScreenState extends State<RegisterScreen> {
         setState(() {
           isEmailVerified = true;
         });
-        timer.cancel();
+        // timer.cancel();
         if (authController.isShowDialogActive.isTrue) {
           authController.isShowDialogActive(false);
           print("-------------------------closing>//");
           Get.back(closeOverlays: true, canPop: false);
         }
+      } else {
+        authController.isShowDialogActive(false);
+        print("-------------------------closing2time>//");
       }
     });
+  }
+
+  // Start timer to delay API call
+  void startEmailVerificationTimer() {
+    // Cancel previous timer if already active
+    if (emailVerificationTimer != null) {
+      emailVerificationTimer!.cancel();
+    }
+
+    emailVerificationTimer = Timer(const Duration(seconds: 1), () {
+      sendVerificationEmail();
+    });
+  }
+
+  // Call the API to send verification email
+  void sendVerificationEmail() async {
+    if (emailIdController.text.isEmail) {
+      bool isEmailSent = await authController.sendEmailVerification(
+        emailId: emailIdController.text,
+      );
+
+      if (isEmailSent) {
+        startStatusCheckTimer();
+      }
+    } else {
+      Get.rawSnackbar(message: "Enter a valid Email ID");
+    }
+  }
+
+  // Start checking the verification status every 5 seconds
+  void startStatusCheckTimer() {
+    checkStatusTimer =
+        Timer.periodic(const Duration(seconds: 5), (timer) async {
+      bool tempIsEmailVerified = await authController.checkEmailVerification(
+        emailId: emailIdController.text,
+      );
+
+      if (tempIsEmailVerified) {
+        setState(() {
+          isEmailVerified = true;
+        });
+        timer.cancel(); // Stop the timer once verified
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    emailVerificationTimer?.cancel();
+    checkStatusTimer?.cancel();
+    super.dispose();
   }
 
   checkUser() {
@@ -125,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: size.width,
             child: Image.asset(
               'assets/images/Ellipse 1.png',
@@ -388,21 +442,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return "Email ID can't be empty";
+                                    return ""; //Email ID can't be empty
                                   }
                                   return null;
                                 },
                                 onChanged: (val) {
-                                  print("changes-------------------------");
                                   setState(() {
-                                    isEmailVerified = false;
+                                    isEmailVerified =
+                                        false; // Reset verification status on change
                                   });
+                                  startEmailVerificationTimer(); // Start the timer when email is changed
                                 },
                                 decoration: InputDecoration(
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.never,
                                   fillColor: Colors.grey[250],
-                                  labelText: 'Enter Email ID',
+                                  labelText: '', //Enter Email ID
                                   hintStyle: TextStyle(
                                     color: Colors.grey[500],
                                   ),
@@ -415,81 +470,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   filled: true,
                                   suffixIcon: emailIdController.text.length > 3
                                       ? isEmailVerified
-                                          ? Container(
+                                          ? const SizedBox(
                                               width: 30,
-                                              child: const Icon(
+                                              child: Icon(
                                                 Icons.verified,
                                                 color: Colors.green,
                                               ),
                                             )
-                                          : InkWell(
-                                              onTap: () async {
-                                                if (emailIdController
-                                                    .text.isEmail) {
-                                                  bool isEmailSent =
-                                                      await authController
-                                                          .sendEmailVerification(
-                                                              emailId:
-                                                                  (emailIdController
-                                                                      .text));
-
-                                                  if (isEmailSent == true) {
-                                                    checkForEmailVerify();
-                                                    authController
-                                                        .isShowDialogActive(
-                                                            true);
-                                                    _showMyDialog();
-                                                  }
-                                                } else {
-                                                  Get.rawSnackbar(
-                                                      message:
-                                                          "Enter a valid Email Id");
-                                                }
-                                              },
-                                              child: Container(
-                                                width: 60,
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 3,
-                                                              right: 3),
-                                                      child: Container(
-                                                          height: 25,
-                                                          decoration: BoxDecoration(
-                                                              color:
-                                                                  Colors.green,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10,
-                                                                    right: 10),
-                                                            child: Text(
-                                                              "Verify",
-                                                              style: primaryfont
-                                                                  .copyWith(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .white),
-                                                            ),
-                                                          )),
-                                                    ),
-                                                  ],
-                                                ),
+                                          : const SizedBox(
+                                              width: 30,
+                                              child: Icon(
+                                                Icons.hourglass_empty,
+                                                color: Colors.orange,
                                               ),
                                             )
-                                      : Container(
-                                          width: 5,
-                                        ),
+                                      : Container(width: 5),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                         color: Color.fromARGB(0, 158, 158, 158),
@@ -506,22 +501,149 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       17.0, 8.0, 17.0, 7.0),
                                 ),
                               ),
-                              // const Text(
-                              //   'Verify',
-                              //   style: TextStyle(
-                              //       color: Colors.green,
-                              //       fontSize: 12,
-                              //       fontWeight: FontWeight.w600),
-                              // )
                             ],
-                          ),
+                          )
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.end,
+                          //   children: [
+                          //     TextFormField(
+                          //       keyboardType: TextInputType.emailAddress,
+                          //       controller: emailIdController,
+                          //       autovalidateMode:
+                          //           AutovalidateMode.onUserInteraction,
+                          //       validator: (value) {
+                          //         if (value!.isEmpty) {
+                          //           return "Email ID can't be empty";
+                          //         }
+                          //         return null;
+                          //       },
+                          //       onChanged: (val) {
+                          //         print("changes-------------------------");
+                          //         setState(() {
+                          //           isEmailVerified = false;
+                          //         });
+                          //       },
+                          //       decoration: InputDecoration(
+                          //         floatingLabelBehavior:
+                          //             FloatingLabelBehavior.never,
+                          //         fillColor: Colors.grey[250],
+                          //         labelText: 'Enter Email ID',
+                          //         hintStyle: TextStyle(
+                          //           color: Colors.grey[500],
+                          //         ),
+                          //         border: OutlineInputBorder(
+                          //           borderSide: const BorderSide(
+                          //               color: Color.fromARGB(0, 158, 158, 158),
+                          //               width: 2.0),
+                          //           borderRadius: BorderRadius.circular(16.0),
+                          //         ),
+                          //         filled: true,
+                          //         suffixIcon: emailIdController.text.length > 3
+                          //             ? isEmailVerified
+                          //                 ? const SizedBox(
+                          //                     width: 30,
+                          //                     child: Icon(
+                          //                       Icons.verified,
+                          //                       color: Colors.green,
+                          //                     ),
+                          //                   )
+                          //                 : InkWell(
+                          //                     onTap: () async {
+                          //                       if (emailIdController
+                          //                           .text.isEmail) {
+                          //                         bool isEmailSent =
+                          //                             await authController
+                          //                                 .sendEmailVerification(
+                          //                                     emailId:
+                          //                                         (emailIdController
+                          //                                             .text));
+
+                          //                         if (isEmailSent == true) {
+                          //                           checkForEmailVerify();
+                          //                           authController
+                          //                               .isShowDialogActive(
+                          //                                   true);
+                          //                           _showMyDialog();
+                          //                         }
+                          //                       } else {
+                          //                         Get.rawSnackbar(
+                          //                             message:
+                          //                                 "Enter a valid Email Id");
+                          //                       }
+                          //                     },
+                          //                     child: SizedBox(
+                          //                       width: 60,
+                          //                       child: Row(
+                          //                         children: [
+                          //                           Padding(
+                          //                             padding:
+                          //                                 const EdgeInsets.only(
+                          //                                     left: 3,
+                          //                                     right: 3),
+                          //                             child: Container(
+                          //                                 height: 25,
+                          //                                 decoration: BoxDecoration(
+                          //                                     color:
+                          //                                         Colors.green,
+                          //                                     borderRadius:
+                          //                                         BorderRadius
+                          //                                             .circular(
+                          //                                                 20)),
+                          //                                 alignment:
+                          //                                     Alignment.center,
+                          //                                 child: Padding(
+                          //                                   padding:
+                          //                                       const EdgeInsets
+                          //                                           .only(
+                          //                                           left: 10,
+                          //                                           right: 10),
+                          //                                   child: Text(
+                          //                                     "Verify",
+                          //                                     style: primaryfont
+                          //                                         .copyWith(
+                          //                                             fontSize:
+                          //                                                 13,
+                          //                                             color: Colors
+                          //                                                 .white),
+                          //                                   ),
+                          //                                 )),
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                   )
+                          //             : Container(
+                          //                 width: 5,
+                          //               ),
+                          //         enabledBorder: OutlineInputBorder(
+                          //           borderSide: const BorderSide(
+                          //               color: Color.fromARGB(0, 158, 158, 158),
+                          //               width: 2.0),
+                          //           borderRadius: BorderRadius.circular(16.0),
+                          //         ),
+                          //         focusedBorder: OutlineInputBorder(
+                          //           borderSide: const BorderSide(
+                          //               color: Color.fromARGB(0, 158, 158, 158),
+                          //               width: 2.0),
+                          //           borderRadius: BorderRadius.circular(16.0),
+                          //         ),
+                          //         contentPadding: const EdgeInsets.fromLTRB(
+                          //             17.0, 8.0, 17.0, 7.0),
+                          //       ),
+                          //     ),
+                          //     // const Text(
+                          //     //   'Verify',
+                          //     //   style: TextStyle(
+                          //     //       color: Colors.green,
+                          //     //       fontSize: 12,
+                          //     //       fontWeight: FontWeight.w600),
+                          //     // )
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
-                    // TextformfieldWidget(
-                    //   text: 'User Name',
-                    //   textt: "User Name",
-                    // ),
+
                     TextPhoneformfieldWidget(
                         controller: phoneNumberController,
                         text: 'Phone Number',
@@ -613,7 +735,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                     ? "Student"
                                                     : "Professional",
                                           );
-                                          authController.registerUser(registerModel);
+                                          authController
+                                              .registerUser(registerModel);
                                           print(
                                               '---<<<<<<<<<<<<<<<<<<<------------------------------${registerModel.usertype}---------------------------------------->>>>>>>>>>>.---------------------------');
                                           print('');

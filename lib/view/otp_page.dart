@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/controllers/profile_controller.dart';
 
@@ -62,7 +60,7 @@ class _OtpScreenState extends State<OtpScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: size.width,
             child: Image.asset(
               'assets/images/Ellipse 1.png',

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class GetRequirementsApiServices extends BaseApiService {

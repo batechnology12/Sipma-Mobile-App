@@ -7,7 +7,7 @@ class MyChatContainers extends StatelessWidget {
   String time;
   ChatMessages chatMessgae;
   MyChatContainers(
-      {required this.chat, required this.time, required this.chatMessgae});
+      {super.key, required this.chat, required this.time, required this.chatMessgae});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class MyChatContainers extends StatelessWidget {
                 chat.length > 30
                     ? Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Container(
+                        child: SizedBox(
                           width: size.width * 0.5,
                           child: Text(
                             chat,

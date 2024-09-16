@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simpa/view/home_page.dart';
 
-import '../widgets/bottumnavigationbar.dart';
 import 'login/login_view/loginpage.dart';
 
 class registersplash extends StatefulWidget {
@@ -28,7 +23,7 @@ class _registersplashState extends State<registersplash> {
     await prefs.setString("auth_token", "null");
     await Future.delayed(const Duration(seconds: 3));
 
-    Get.offAll(() => loginpage());
+    Get.offAll(() => const loginpage());
   }
 
   @override

@@ -55,7 +55,7 @@ class _EducationSkillsUpdatePageState extends State<EducationSkillsUpdatePage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary:const Color.fromARGB(255, 42, 59, 158),
+                  foregroundColor: const Color.fromARGB(255, 42, 59, 158),
                 ),
               ),
             ),
@@ -95,7 +95,7 @@ class _EducationSkillsUpdatePageState extends State<EducationSkillsUpdatePage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary:const Color.fromARGB(255, 42, 59, 158),
+                  foregroundColor: const Color.fromARGB(255, 42, 59, 158),
                 ),
               ),
             ),

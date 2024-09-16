@@ -1,9 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../widgets/bottumnavigationbar.dart';
 
 
@@ -40,10 +38,10 @@ class _postsplashState extends State<postsplash> {
             width: 250,
             fit: BoxFit.cover,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          Text(
+          const Text(
             'Your Post has Successfully Posted',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),

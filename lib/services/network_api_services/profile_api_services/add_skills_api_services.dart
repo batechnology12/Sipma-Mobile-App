@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simpa/models/add_positions_model.dart';
-import 'package:simpa/models/profile_update_model.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class AddSkillssApiServices extends BaseApiService {

@@ -5,7 +5,7 @@ import 'package:simpa/constands/constands.dart';
 class OthersChatBubble extends StatelessWidget {
   String chat;
   String time;
-  OthersChatBubble({
+  OthersChatBubble({super.key, 
     required this.chat,
     required this.time,
   });
@@ -28,7 +28,7 @@ class OthersChatBubble extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 chat.length > 30
-                    ? Container(
+                    ? SizedBox(
                         width: size.width * 0.5,
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),

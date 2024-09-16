@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simpa/models/profile_update_model.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class PostCommentsApiServices extends BaseApiService {
@@ -15,7 +14,7 @@ class PostCommentsApiServices extends BaseApiService {
       final prefs = await SharedPreferences.getInstance();
       String? authtoken = prefs.getString("auth_token");
 
-      var response = await dio.post(postCommemtsURL,
+      var response = await dio.post(postCommentsURL,
           options: Options(
               headers: {
                 'Accept': 'application/json',

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
@@ -58,9 +57,9 @@ class _ViewChatsUserListState extends State<ViewChatsUserList> {
         chatController.chatListUsers.last);
     stream.listen((event) {
       print(event.docs.length);
-      event.docs.forEach((element) {
+      for (var element in event.docs) {
         chatController.chatListUsers.add(element);
-      });
+      }
     });
     chatController.update();
   }
@@ -68,7 +67,7 @@ class _ViewChatsUserListState extends State<ViewChatsUserList> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       height: size.height * 0.9,
       child: ListView(
         shrinkWrap: true,

@@ -1,25 +1,17 @@
-import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/constands/message_types.dart';
 import 'package:simpa/controllers/posts_controller.dart';
 import 'package:simpa/controllers/profile_controller.dart';
 import 'package:simpa/models/chat_models.dart';
-import 'package:simpa/view/change_password.dart';
 import 'package:simpa/view/chat_view/view_message_screen.dart';
 import 'package:simpa/view/login/login_view/loginpage.dart';
 import 'package:simpa/view/post_view/post_view.dart';
-import 'package:simpa/view/setting_privacy.dart';
-import 'package:simpa/view/setting_proifile_page.dart';
-import 'package:simpa/view/setting_term_condition.dart';
 
 class PublicProfilePageView extends StatefulWidget {
   int userId;
@@ -43,7 +35,7 @@ class _ProfilePageState extends State<PublicProfilePageView> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
@@ -71,7 +63,7 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                           final prefs = await SharedPreferences.getInstance();
                           await FirebaseMessaging.instance.deleteToken();
                           await prefs.setString("auth_token", "null");
-                          Get.to(loginpage());
+                          Get.to(const loginpage());
                         },
                         child: Text(
                           'Log Out',
@@ -107,19 +99,19 @@ class _ProfilePageState extends State<PublicProfilePageView> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return new Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 28,
                 ),
-                Center(
+                const Center(
                     child: Text(
                   "Do you want to Delete this post?",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 )),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
                 Row(
@@ -127,7 +119,7 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                   children: [
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            minimumSize: Size(100, 40),
+                            minimumSize: const Size(100, 40),
                             backgroundColor: kblue,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18))),
@@ -139,13 +131,13 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                           'Delete',
                           style: TextStyle(fontSize: 15, color: kwhite),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
                             side: BorderSide(color: kblue, width: 1),
-                            minimumSize: Size(110, 40),
+                            minimumSize: const Size(110, 40),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
                             )),
@@ -309,7 +301,7 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18)),
                                   backgroundColor: kblue,
-                                  minimumSize: Size(50, 40)),
+                                  minimumSize: const Size(50, 40)),
                               onPressed: () async {
                                 bool isRequested = await profileController
                                     .sendRequestFromProfile(
@@ -346,7 +338,7 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18)),
                                   backgroundColor: kblue,
-                                  minimumSize: Size(50, 40)),
+                                  minimumSize: const Size(50, 40)),
                               onPressed: () {
                                 final myprofileController =
                                     Get.find<ProfileController>();
@@ -399,10 +391,10 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                                       peerId: widget.userId,
                                     ));
                               },
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Chat',
                                     style: TextStyle(color: Colors.white),
                                   )
@@ -450,10 +442,10 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Row(
+                              const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
-                                children: const [
+                                children: [
                                   Text(
                                     'Connects',
                                     style: TextStyle(fontSize: 15),
@@ -470,10 +462,10 @@ class _ProfilePageState extends State<PublicProfilePageView> {
                               ),
                             ],
                           ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25, top: 25),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 25, top: 25),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             'Post',
                             style: TextStyle(fontSize: 17),

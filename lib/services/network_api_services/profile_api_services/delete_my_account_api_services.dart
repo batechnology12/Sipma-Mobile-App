@@ -14,7 +14,7 @@ class DeleteMyAccountApiServices extends BaseApiService {
      final prefs = await SharedPreferences.getInstance();
       String? authtoken = prefs.getString("auth_token");
 
-      var response = await dio.post(deleteUser,
+      var response = await dio.post(deleteUserURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

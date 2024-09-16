@@ -7,7 +7,7 @@ class ResendOtpApiServices extends BaseApiService {
     dynamic responseJson;
     try {
       var dio = Dio();
-      var response = await dio.post(resendOtp,
+      var response = await dio.post(resendOtpURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

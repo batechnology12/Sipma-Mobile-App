@@ -14,7 +14,7 @@ class GetEducationalSkillsServicesApi extends BaseApiService {
        String? authtoken = prefs.getString("auth_token");
 
       var response = await dio.get(
-        geteducationskillUrl,
+        getEducationSkillURL,
         options: Options(
             headers: {
               'Accept': 'application/json',

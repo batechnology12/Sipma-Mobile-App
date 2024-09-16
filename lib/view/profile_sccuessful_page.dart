@@ -25,6 +25,7 @@ class _ProfileSuccessfullPageState extends State<ProfileSuccessfullPage> {
 
     Get.offAll(() => BottomNavigationBarExample());
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -32,18 +33,18 @@ class _ProfileSuccessfullPageState extends State<ProfileSuccessfullPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/successimage.png',),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-           Padding(
-             padding: const EdgeInsets.only(left: 17),
+           const Padding(
+             padding: EdgeInsets.only(left: 17),
              child: Text( 'Your Profile has been',style: TextStyle(fontSize: 18),),
            ),
-           SizedBox(
+           const SizedBox(
             height: 2,
            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 17),
+            const Padding(
+              padding: EdgeInsets.only(left: 17),
               child: Text('Changes Successfully',style: TextStyle(fontSize: 18),),
             )
           ],

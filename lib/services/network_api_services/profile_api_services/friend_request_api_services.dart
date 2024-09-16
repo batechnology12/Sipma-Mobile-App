@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simpa/models/register_model.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class GetFriendRequestListApiServices extends BaseApiService {
@@ -12,7 +11,7 @@ class GetFriendRequestListApiServices extends BaseApiService {
       final prefs = await SharedPreferences.getInstance();
       String? authtoken = prefs.getString("auth_token");
       var response = await dio.get(
-        frindRequestList,
+        friendRequestListURL,
         options: Options(
             headers: {
               'Accept': 'application/json',

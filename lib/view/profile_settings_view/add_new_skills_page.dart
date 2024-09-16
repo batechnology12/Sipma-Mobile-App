@@ -5,9 +5,6 @@ import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/controllers/profile_controller.dart';
-import 'package:simpa/models/add_positions_model.dart';
-import 'package:simpa/models/department_model.dart';
-import 'package:simpa/models/industries_model.dart';
 import 'package:simpa/models/skills_model.dart';
 
 class AddNewSkillsView extends StatefulWidget {
@@ -67,7 +64,7 @@ class _AddNewSkillsViewState extends State<AddNewSkillsView> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: kblue, // button text color
+                foregroundColor: kblue, // button text color
               ),
             ),
           ),
@@ -76,11 +73,12 @@ class _AddNewSkillsViewState extends State<AddNewSkillsView> {
       },
     );
 
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         date = picked;
         startDateController.text = formatDate(date, [dd, "-", mm, "-", yyyy]);
       });
+    }
   }
 
   _selectDate2(BuildContext context) async {
@@ -102,7 +100,7 @@ class _AddNewSkillsViewState extends State<AddNewSkillsView> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: kblue, // button text color
+                foregroundColor: kblue, // button text color
               ),
             ),
           ),
@@ -111,11 +109,12 @@ class _AddNewSkillsViewState extends State<AddNewSkillsView> {
       },
     );
 
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         date2 = picked;
         endDateController.text = formatDate(date2, [dd, "-", mm, "-", yyyy]);
       });
+    }
   }
 
   @override
@@ -147,7 +146,7 @@ class _AddNewSkillsViewState extends State<AddNewSkillsView> {
             builder: (_) {
               return Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Container(
+                child: SizedBox(
                   height: 56,
                   child: DropdownSearch<SkillsData>(
                     itemAsString: (SkillsData u) => u.name,

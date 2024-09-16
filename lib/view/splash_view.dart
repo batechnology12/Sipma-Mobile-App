@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:get/get.dart';
 
-import 'package:get/get_core/src/get_main.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,14 +37,14 @@ class _splashState extends State<splash> {
     await Future.delayed(const Duration(milliseconds: 3900));
      
     Get.offAll(
-      () => loginpage(),
+      () => const loginpage(),
     );
   }
 
   toregisterDetailsPage() async {
     await Future.delayed(const Duration(milliseconds: 3900));
     Get.offAll(
-      () => RegisterDetailsView(),
+      () => const RegisterDetailsView(),
     );
   }
 

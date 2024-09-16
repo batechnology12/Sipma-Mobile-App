@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/posts_controller.dart';
-import 'package:simpa/models/get_all_post_modals.dart';
-import 'package:simpa/view/coments.dart';
-import 'package:simpa/view/reactions_page.dart';
-import 'package:simpa/widgets/like.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class OtherPostView extends StatefulWidget {
   String image;
@@ -25,19 +19,19 @@ class _PostViewState extends State<OtherPostView> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 28,
                 ),
-                Center(
+                const Center(
                     child: Text(
                   "Do you want to Delete this post?",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 )),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
                 Row(
@@ -45,7 +39,7 @@ class _PostViewState extends State<OtherPostView> {
                   children: [
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            minimumSize: Size(100, 40),
+                            minimumSize: const Size(100, 40),
                             backgroundColor: kblue,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18))),
@@ -57,13 +51,13 @@ class _PostViewState extends State<OtherPostView> {
                           'Delete',
                           style: TextStyle(fontSize: 15, color: kwhite),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
                             side: BorderSide(color: kblue, width: 1),
-                            minimumSize: Size(110, 40),
+                            minimumSize: const Size(110, 40),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
                             )),

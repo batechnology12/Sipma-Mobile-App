@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:simpa/constands/constands.dart';
 
 class RecivedImageView extends StatelessWidget {
   String image;
   String timestamp;
-  RecivedImageView({
+  RecivedImageView({super.key, 
     required this.image,
     required this.timestamp,
   });
@@ -40,7 +39,7 @@ class RecivedImageView extends StatelessWidget {
                   //Activity container
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Container(
+                    child: SizedBox(
                       height: 200,
                       width: size.width * 0.5,
                       child: Image.network(

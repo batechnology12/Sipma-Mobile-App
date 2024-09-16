@@ -1,16 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:simpa/constands/chat_list_constants.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/constands/firestoreconsts.dart';
 import 'package:simpa/constands/message_types.dart';
@@ -125,9 +119,9 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
         widget.chatModel.chatId, 20, chatController.listMessages.last);
     stream.listen((event) {
       print(event.docs.length);
-      event.docs.forEach((element) {
+      for (var element in event.docs) {
         chatController.listMessages.add(element);
-      });
+      }
     });
     chatController.update();
   }
@@ -195,7 +189,7 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
                                         userId: widget.peerId,
                                       ));
                                 },
-                                child: Container(
+                                child: SizedBox(
                                   height: 50,
                                   width: 50,
                                   child: ClipRRect(
@@ -215,7 +209,7 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
                                         userId: widget.peerId,
                                       ));
                                 },
-                                child: Container(
+                                child: SizedBox(
                                     height: 40,
                                     width: 40,
                                     child: ClipRRect(
@@ -236,7 +230,7 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
               return getBack();
             },
             child: GetBuilder<ChatController>(
-                builder: (_) => Container(
+                builder: (_) => SizedBox(
                       height: size.height - 50,
                       child: StreamBuilder<QuerySnapshot>(
                           stream: chatController.getChatMessage(
@@ -352,7 +346,7 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
                           onSendMessage(
                               textEditingController.text, MessageType().text);
                         },
-                        child: Icon(Icons.send)),
+                        child: const Icon(Icons.send)),
                   ),
                 ],
               ),
@@ -557,7 +551,7 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
                     ? Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: widget.chatModel.photo == ""
-                            ? Container(
+                            ? SizedBox(
                                 height: 25,
                                 width: 25,
                                 child: ClipRRect(
@@ -566,7 +560,7 @@ class _ViewMessageScreenState extends State<ViewMessageScreen> {
                                       "assets/icons/profil_img.jpeg"),
                                 ),
                               )
-                            : Container(
+                            : SizedBox(
                                 height: 25,
                                 width: 25,
                                 child: ClipRRect(

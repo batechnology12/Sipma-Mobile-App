@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/controllers/chat_controller.dart';
@@ -14,14 +13,11 @@ import 'package:simpa/controllers/profile_controller.dart';
 import 'package:simpa/models/notification_model.dart';
 import 'package:simpa/view/internet_page.dart';
 import 'package:simpa/view/splash_view.dart';
-import 'dart:developer' as developer;
-import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:simpa/widgets/bottumnavigationbar.dart';
 import 'package:upgrader/upgrader.dart';
 import 'view/from_notification_view/notification_comment_view.dart';
 import 'view/from_notification_view/notification_reaction_screen_view.dart';
-import 'view/select_role/select_user_role_view.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -252,8 +248,9 @@ class MyApp extends StatelessWidget {
                   builder: (context, snapshot) {
                     final connenctivityResult = snapshot.data;
                     if (connenctivityResult == ConnectivityResult.none ||
-                        connenctivityResult == null)
+                        connenctivityResult == null) {
                       return const InternetPage();
+                    }
 
                     return child!;
                   });
@@ -261,7 +258,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: UpgradeAlert(
                 // child: const splash(),
-                child:const splash()),
+                child: const splash()),
             theme: ThemeData(primarySwatch: Colors.grey),
           );
         });

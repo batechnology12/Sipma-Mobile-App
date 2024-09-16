@@ -38,10 +38,10 @@ class CityList {
     required this.status,
   });
 
-  int id;
+  String id;
   String city;
   String state;
-  int status;
+  String status;
 
   factory CityList.fromJson(Map<String, dynamic> json) => CityList(
         id: json["id"],

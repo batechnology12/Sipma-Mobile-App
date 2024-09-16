@@ -9,7 +9,7 @@ class SendVerificationApiService extends BaseApiService {
       var dio = Dio();
       // final prefs = await SharedPreferences.getInstance();
       // String? authtoken = prefs.getString("auth_token");
-      var response = await dio.post(sendEmailVerify,
+      var response = await dio.post(sendEmailVerifyURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

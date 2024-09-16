@@ -77,12 +77,12 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                // kverifiyforgotimage,
-                Text(
+                const Text(
                   'Create New Password',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                 ),
-                SizedBox(height: 5,),
-                Text(
+                const SizedBox(height: 5,),
+                const Text(
                   'create a new password',
                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16,color: Colors.grey),
                 ),

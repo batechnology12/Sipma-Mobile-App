@@ -1,14 +1,9 @@
-import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpa/constands/constands.dart';
@@ -16,14 +11,9 @@ import 'package:simpa/constands/message_types.dart';
 import 'package:simpa/controllers/posts_controller.dart';
 import 'package:simpa/controllers/profile_controller.dart';
 import 'package:simpa/models/chat_models.dart';
-import 'package:simpa/view/change_password.dart';
 import 'package:simpa/view/chat_view/view_message_screen.dart';
 import 'package:simpa/view/login/login_view/loginpage.dart';
 import 'package:simpa/view/post_view/post_view.dart';
-import 'package:simpa/view/setting_privacy.dart';
-import 'package:simpa/view/setting_proifile_page.dart';
-import 'package:simpa/view/setting_term_condition.dart';
-import 'package:simple_grid/simple_grid.dart';
 
 class PublicUserProfilePage extends StatefulWidget {
   int userId;
@@ -47,7 +37,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
@@ -111,19 +101,19 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return new Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 28,
                 ),
-                Center(
+                const Center(
                     child: Text(
                   "Do you want to Delete this post?",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 )),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
                 Row(
@@ -131,7 +121,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                   children: [
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            minimumSize: Size(100, 40),
+                            minimumSize: const Size(100, 40),
                             backgroundColor: kblue,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18))),
@@ -143,13 +133,13 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                           'Delete',
                           style: TextStyle(fontSize: 15, color: kwhite),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
                             side: BorderSide(color: kblue, width: 1),
-                            minimumSize: Size(110, 40),
+                            minimumSize: const Size(110, 40),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
                             )),
@@ -192,7 +182,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
       body: SafeArea(child: GetBuilder<ProfileController>(builder: (_) {
         return SingleChildScrollView(
           child: profileController.otherUserProfileData.isEmpty
-              ? Center(
+              ? const Center(
                   child: CupertinoActivityIndicator(),
                 )
               : Column(
@@ -200,7 +190,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                     Stack(children: [
                       Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 150,
                             width: size.width,
                             child: Row(
@@ -275,7 +265,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                                                     ),
                                             ),
                                 ),
-                                Container(
+                                SizedBox(
                                     height: 100,
                                     width: 100,
                                     child: ClipRRect(
@@ -500,10 +490,10 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                                       peerId: widget.userId,
                                     ));
                               },
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Chat',
                                     style: TextStyle(color: Colors.white),
                                   )
@@ -757,7 +747,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                     ),
                     Padding(
                         padding: const EdgeInsets.only(left: 20, right: 10),
-                        child: Container(
+                        child: SizedBox(
                           width: size.width,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -923,7 +913,7 @@ class _ProfilePageState extends State<PublicUserProfilePage> {
                       height: 10,
                     ),
 
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(left: 25, top: 25),
                       child: Row(
                         children: [

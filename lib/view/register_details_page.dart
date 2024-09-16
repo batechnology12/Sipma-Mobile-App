@@ -3,7 +3,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:get/get.dart';
 
@@ -15,7 +14,6 @@ import 'package:simpa/models/city_list_model.dart';
 
 import 'package:simpa/models/department_model.dart';
 
-import 'package:simpa/models/get_education_list_model.dart';
 
 import 'package:simpa/models/industries_model.dart';
 
@@ -24,7 +22,6 @@ import 'package:simpa/models/profile_update_model.dart';
 import 'package:simpa/models/requiremets_models.dart';
 
 import 'package:simpa/models/state_list_model.dart';
-import 'package:simpa/searchable_dropdown-master/lib/dropdown_search.dart'as dp;
 
 import 'package:simpa/widgets/email_text_field.dart';
 
@@ -92,7 +89,7 @@ class _RegisterDetailsViewState extends State<RegisterDetailsView> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: size.width,
             child: Image.asset(
               'assets/images/Ellipse 1.png',
@@ -392,7 +389,7 @@ class _RegisterDetailsViewState extends State<RegisterDetailsView> {
                             // ),
                             Padding(
                               padding: const EdgeInsets.only(left: 0, right: 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: 56,
                                 child: DropdownSearch<Industry>(
                                   itemAsString: (Industry u) => u.name,
@@ -515,7 +512,7 @@ class _RegisterDetailsViewState extends State<RegisterDetailsView> {
                             // ),
                             Padding(
                               padding: const EdgeInsets.only(left: 0, right: 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: 56,
                                 child: authController.departments.isEmpty
                                     ? Container(
@@ -614,7 +611,7 @@ class _RegisterDetailsViewState extends State<RegisterDetailsView> {
                             return Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
-                              child: Container(
+                              child: SizedBox(
                                 height: 56,
                                 child: authController.requirementList.isEmpty
                                     ? Container()

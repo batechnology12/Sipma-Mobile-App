@@ -20,7 +20,7 @@ class UpdateEducationSkillssApiServices extends BaseApiService {
       String? authtoken = prefs.getString("auth_token");
       String? userId = prefs.getString("user_id");
 
-      var response = await dio.post(updateEducationSkillsApiUrl,
+      var response = await dio.post(updateEducationSkillsURL,
           options: Options(
               headers: {
                 'Accept': 'application/json',

@@ -7,7 +7,6 @@ import 'package:simpa/controllers/posts_controller.dart';
 import 'package:simpa/models/get_all_post_modals.dart';
 import 'package:simpa/view/coments.dart';
 import 'package:simpa/view/reactions_page.dart';
-import 'package:simpa/widgets/like.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostView extends StatefulWidget {
@@ -54,19 +53,19 @@ class _PostViewState extends State<PostView> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             height: 162,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 28,
                 ),
-                Center(
+                const Center(
                     child: Text(
                   "Do you want to Delete this post?",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 )),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
                 Row(
@@ -74,7 +73,7 @@ class _PostViewState extends State<PostView> {
                   children: [
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            minimumSize: Size(100, 40),
+                            minimumSize: const Size(100, 40),
                             backgroundColor: kblue,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18))),
@@ -86,13 +85,13 @@ class _PostViewState extends State<PostView> {
                           'Delete',
                           style: TextStyle(fontSize: 15, color: kwhite),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
                             side: BorderSide(color: kblue, width: 1),
-                            minimumSize: Size(110, 40),
+                            minimumSize: const Size(110, 40),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
                             )),
@@ -283,10 +282,10 @@ class _PostViewState extends State<PostView> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Expanded(
+                    const Expanded(
                       flex: 0,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Divider(
                           height: 1,
                           color: Colors.black,
@@ -309,10 +308,10 @@ class _PostViewState extends State<PostView> {
                             size: 22,
                             onTap: onLikeButtonTapped,
                             isLiked: widget.postData.likedByUser,
-                            circleColor: CircleColor(
+                            circleColor: const CircleColor(
                                 start: Color(0xff00ddff),
                                 end: Color(0xff0099cc)),
-                            bubblesColor: BubblesColor(
+                            bubblesColor: const BubblesColor(
                               dotPrimaryColor: Color(0xff33b5e5),
                               dotSecondaryColor: Color(0xff0099cc),
                             ),
@@ -339,14 +338,14 @@ class _PostViewState extends State<PostView> {
                                   'Like',
                                   style: TextStyle(color: color),
                                 );
-                              } else
+                              } else {
                                 result = Text(
                                   count! >= 1000
-                                      ? (count / 1000.0).toStringAsFixed(1) +
-                                          'k'
+                                      ? '${(count / 1000.0).toStringAsFixed(1)}k'
                                       : text,
                                   style: TextStyle(color: color),
                                 );
+                              }
                               return result;
                             },
                           ),

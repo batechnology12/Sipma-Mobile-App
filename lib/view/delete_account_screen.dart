@@ -75,18 +75,18 @@ class _DeleteUserScreenState extends State<DeleteUserScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                  // kverifiyforgotimage,
-                  Text(
+                  const Text(
                     'Delete your account',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   ),
-                  SizedBox(height: 5,),
-                  Text(
+                  const SizedBox(height: 5,),
+                  const Text(
                     'Confirm your password',
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16,color: Colors.grey),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30,bottom: 30),
-                    child: Container(
+                    child: SizedBox(
                       height: 300.h,
                       width: size.width,
                       child: Center(child: kdeleteUserimage)),
@@ -284,7 +284,7 @@ class _DeleteUserScreenState extends State<DeleteUserScreen> {
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:Color.fromARGB(255, 223, 48, 48),
+                    backgroundColor:const Color.fromARGB(255, 223, 48, 48),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),

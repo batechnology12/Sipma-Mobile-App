@@ -11,7 +11,7 @@ class MarkNotifcationAsCount extends BaseApiService {
       final prefs = await SharedPreferences.getInstance();
       String? authtoken = prefs.getString("auth_token");
 
-      var response = await dio.post(markNotificationAsread,
+      var response = await dio.post(markNotificationAsReadURL,
           options: Options(
               headers: {
                 'Accept': 'application/json',

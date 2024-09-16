@@ -8,9 +8,7 @@ import 'package:simpa/controllers/profile_controller.dart';
 import 'package:simpa/models/add_positions_model.dart';
 import 'package:simpa/models/city_list_model.dart';
 import 'package:simpa/models/department_model.dart';
-import 'package:simpa/models/industries_model.dart';
 import 'package:simpa/models/requiremets_models.dart';
-import 'package:simpa/widgets/textfield.dart';
 
 class ProfileAddNewPossitonView extends StatefulWidget {
   bool isFromLogin;
@@ -80,7 +78,7 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: kblue, // button text color
+                foregroundColor: kblue, // button text color
               ),
             ),
           ),
@@ -89,11 +87,12 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
       },
     );
 
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         date = picked;
         startDateController.text = formatDate(date, [dd, "-", mm, "-", yyyy]);
       });
+    }
   }
 
   _selectDate2(BuildContext context) async {
@@ -115,7 +114,7 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: kblue, // button text color
+                foregroundColor: kblue, // button text color
               ),
             ),
           ),
@@ -124,11 +123,12 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
       },
     );
 
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         date2 = picked;
         endDateController.text = formatDate(date2, [dd, "-", mm, "-", yyyy]);
       });
+    }
   }
 
   @override
@@ -402,7 +402,7 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
                   // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 0, right: 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 56,
                       child: DropdownSearch<Department>(
                         itemAsString: (Department u) => u.title,
@@ -490,7 +490,7 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
                 GetBuilder<AuthController>(builder: (_) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Container(
+                    child: SizedBox(
                       height: 56,
                       child: DropdownSearch<Requirement>(
                         itemAsString: (Requirement u) => u.name,
@@ -553,7 +553,7 @@ class _ProfileAddNewPossitonViewState extends State<ProfileAddNewPossitonView> {
           Padding(
             padding:
                 const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-            child: Container(
+            child: SizedBox(
               height: 56,
               child: DropdownSearch<String>(
                 popupProps: PopupProps.menu(

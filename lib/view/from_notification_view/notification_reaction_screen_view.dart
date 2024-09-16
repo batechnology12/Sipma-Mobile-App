@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/posts_controller.dart';
@@ -40,14 +38,14 @@ class _reacton_screenState extends State<NotficationReactionView> {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(90),
+          preferredSize: const Size.fromHeight(90),
           child: AppBar(
             bottom: TabBar(
                 isScrollable: false,
                 labelColor: kblue,
                 indicatorColor: kblue,
                 tabs: [
-                  Tab(
+                  const Tab(
                     text: 'ALL',
                   ),
                   Row(
@@ -56,7 +54,7 @@ class _reacton_screenState extends State<NotficationReactionView> {
                       const SizedBox(
                         width: 5,
                       ),
-                      Tab(
+                      const Tab(
                         text: "",
                       ),
                     ],
@@ -122,7 +120,7 @@ class _reacton_screenState extends State<NotficationReactionView> {
             }),
             GetBuilder<PostsController>(builder: (_) {
               return ListView.separated(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: postController.likesList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
@@ -167,7 +165,7 @@ class _reacton_screenState extends State<NotficationReactionView> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
+                  return const Divider(
                     height: 1,
                   );
                 },

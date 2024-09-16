@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpa/services/base_urls/base_urls.dart';
 
 class GetCityApiServices extends BaseApiService {
@@ -11,7 +10,7 @@ class GetCityApiServices extends BaseApiService {
       // final prefs = await SharedPreferences.getInstance();
       // String? authtoken = prefs.getString("auth_token");
       var response = await dio.post(
-        "$getCityList/$id",
+        "$getCityListURL/$id",
         options: Options(
             headers: {
               'Accept': 'application/json',

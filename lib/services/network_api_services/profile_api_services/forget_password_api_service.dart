@@ -7,7 +7,7 @@ class ForgetPasswordApiServices extends BaseApiService {
     dynamic responseJson;
     try {
       var dio = Dio();
-      var response = await dio.post(forgotPassword,
+      var response = await dio.post(forgotPasswordURL,
           options: Options(
               headers: {
                 'Content-Type': 'application/json',

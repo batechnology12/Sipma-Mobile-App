@@ -53,7 +53,7 @@ If you have questions or complaints regarding this Policy, please first contact 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Privacy'),
+        title: const Text('Privacy'),
         backgroundColor: Colors.white,
       ),
       body: SafeArea(

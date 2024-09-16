@@ -2,7 +2,6 @@
 //
 //     final profileUpdateModel = profileUpdateModelFromJson(jsonString);
 
-import 'dart:convert';
 
 class StudentProfileUpdateModel {
   dynamic currentCompany;

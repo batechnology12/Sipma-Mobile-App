@@ -90,6 +90,7 @@ class ProfileController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isBackgroundLoading = false.obs;
+  RxBool friendsearchLoading = false.obs;
 
   var tBioController = TextEditingController();
 
@@ -97,22 +98,17 @@ class ProfileController extends GetxController {
 
   getProfile() async {
     dio.Response<dynamic> response = await getProfileApiServices.getProfile();
-       final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     profileData.clear();
     if (response.statusCode == 200) {
       ProfileModel profileModel = ProfileModel.fromJson(response.data);
-       await prefs.setString("user_id", profileModel.user.id.toString());
+      await prefs.setString("user_id", profileModel.user.id.toString());
       profileData.add(profileModel);
     } else if (response.statusCode == 401) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("auth_token", "null");
 
-
-
-
-      Get.to(loginpage());
-
-      
+      Get.to(const loginpage());
     }
     update();
   }
@@ -124,7 +120,9 @@ class ProfileController extends GetxController {
       ProfileModel profileModel = ProfileModel.fromJson(response.data);
       profileData.add(profileModel);
       update();
-      if (profileModel.positions.isEmpty || profileModel.skills.isEmpty || profileModel.user.education == null) {
+      if (profileModel.positions.isEmpty ||
+          profileModel.skills.isEmpty ||
+          profileModel.user.education == null) {
         Get.offAll(() => const SettingProfileMadatoryPage());
       } else {
         Get.offAll(() => BottomNavigationBarExample());
@@ -132,7 +130,7 @@ class ProfileController extends GetxController {
     } else if (response.statusCode == 401) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("auth_token", "null");
-      Get.to(loginpage());
+      Get.to(const loginpage());
     }
   }
 
@@ -150,7 +148,7 @@ class ProfileController extends GetxController {
     } else if (response.statusCode == 401) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("auth_token", "null");
-      Get.to(loginpage());
+      Get.to(const loginpage());
     }
     update();
   }
@@ -178,6 +176,7 @@ class ProfileController extends GetxController {
   }
 
   searchUser(String keyWord) async {
+    friendsearchLoading(true);
     searchFriendsList.clear();
     dio.Response<dynamic> response =
         await searchFriendsApiServices.searchFriends(keyWord: keyWord);
@@ -187,6 +186,7 @@ class ProfileController extends GetxController {
           SearchFriendsModel.fromJson(response.data);
       searchFriendsList = searchFriendsModel.friendList;
     }
+    friendsearchLoading(false);
     update();
   }
 
@@ -221,7 +221,6 @@ class ProfileController extends GetxController {
     dio.Response<dynamic> response =
         await sendFriendRequestAPIServices.sendFriendRequest(
             userId: userId, friendId: profileData.first.user.id.toString());
-
 
     print("send req --------------->>");
 
@@ -355,16 +354,15 @@ class ProfileController extends GetxController {
     }
   }
 
-  updateUserDetails({
-    required String name,
-    required String lastName,
-    required String bio,
-    required String designation,
-    required String email,
-    required String hisOrHer,
-    required String mobile,
-    required String education
-  }) async {
+  updateUserDetails(
+      {required String name,
+      required String lastName,
+      required String bio,
+      required String designation,
+      required String email,
+      required String hisOrHer,
+      required String mobile,
+      required String education}) async {
     isLoading(true);
     update();
     dio.Response<dynamic> response =
@@ -519,27 +517,25 @@ class ProfileController extends GetxController {
     }
   }
 
+  DeleteMyAccountApiServices deleteMyAccountApiServices =
+      DeleteMyAccountApiServices();
 
-DeleteMyAccountApiServices deleteMyAccountApiServices = DeleteMyAccountApiServices();
-
-  deleteYourAccount(
-      {required String password}) async {
+  deleteYourAccount({required String password}) async {
     dio.Response<dynamic> response =
-        await deleteMyAccountApiServices.deleteMyAccount(
-            password: password);
+        await deleteMyAccountApiServices.deleteMyAccount(password: password);
 
     if (response.statusCode == 200) {
-       Get.rawSnackbar(
+      Get.rawSnackbar(
         messageText: const Text(
           "Your Sipmaa account got deleted",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,
       );
-                     final prefs = await SharedPreferences.getInstance();
-                          // await FirebaseMessaging.instance.deleteToken();
-                          await prefs.setString("auth_token", "null");
-                          Get.offAll(const loginpage());
+      final prefs = await SharedPreferences.getInstance();
+      // await FirebaseMessaging.instance.deleteToken();
+      await prefs.setString("auth_token", "null");
+      Get.offAll(const loginpage());
     } else if (response.statusCode == 422) {
       Get.rawSnackbar(
         messageText: const Text(
@@ -620,6 +616,42 @@ DeleteMyAccountApiServices deleteMyAccountApiServices = DeleteMyAccountApiServic
     }
   }
 
+  updatePositions(
+      {required AddPositonsModel addPostionsModel,
+      required String useId,
+      required String id,
+      bool isFromLogin = false}) async {
+    isLoading(true);
+    dio.Response<dynamic> response =
+        await addPositonsApiServices.updateositions(
+            addPostionsModel: addPostionsModel, useId: useId, id: id);
+    isLoading(false);
+    if (response.statusCode == 200) {
+      getProfile();
+      if (isFromLogin) {
+        Get.offAll(() => const SettingProfileMadatoryPage());
+      } else {
+        Get.offAll(() => const SettingProfilePage());
+      }
+
+      Get.rawSnackbar(
+        messageText: const Text(
+          "Added new position",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+      );
+    } else {
+      Get.rawSnackbar(
+        messageText: const Text(
+          "Unable to add your position",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
   addSkills(
       {required String skills,
       required String useId,
@@ -659,8 +691,6 @@ DeleteMyAccountApiServices deleteMyAccountApiServices = DeleteMyAccountApiServic
         .markNotificationAsRead(notificationId: notificationId.toString());
   }
 
-
-
   //get skill education list
   GetEducationalSkillsServicesApi getEducationskillApiServices =
       GetEducationalSkillsServicesApi();
@@ -670,10 +700,10 @@ DeleteMyAccountApiServices deleteMyAccountApiServices = DeleteMyAccountApiServic
     dio.Response<dynamic> response =
         await getEducationskillApiServices.getEducationalSkillsApi();
     if (response.statusCode == 200) {
-      
-      GetEducationalSkillsModel educationSkillsListModel = GetEducationalSkillsModel.fromJson(response.data); 
-            educationskillsData = educationSkillsListModel.departments;
-            update();
+      GetEducationalSkillsModel educationSkillsListModel =
+          GetEducationalSkillsModel.fromJson(response.data);
+      educationskillsData = educationSkillsListModel.departments;
+      update();
     } else {
       Get.rawSnackbar(
         messageText: const Text(
@@ -685,6 +715,4 @@ DeleteMyAccountApiServices deleteMyAccountApiServices = DeleteMyAccountApiServic
     }
     update();
   }
-
-
 }

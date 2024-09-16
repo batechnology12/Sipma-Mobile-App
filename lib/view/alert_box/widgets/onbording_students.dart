@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 
 class OnbordingStudent extends StatefulWidget {
-  OnbordingStudent({super.key});
+  const OnbordingStudent({super.key});
 
   @override
   State<OnbordingStudent> createState() => _OnbordingStudentState();
@@ -58,7 +57,7 @@ class _OnbordingStudentState extends State<OnbordingStudent> {
                     child: Container(
                       height: 40,
                       width: double.infinity,
-                       decoration: BoxDecoration(
+                      decoration: BoxDecoration(
                           border: Border.all(width: 1, color: kgrey),
                           borderRadius: BorderRadius.circular(25)),
                       child: Padding(
@@ -90,7 +89,6 @@ class _OnbordingStudentState extends State<OnbordingStudent> {
                           ],
                         ),
                       ),
-                     
                     ),
                   ),
                   ksizedbox30,
@@ -177,7 +175,8 @@ class _OnbordingStudentState extends State<OnbordingStudent> {
                         ),
                       ),
                     ),
-                  ),  ksizedbox10,
+                  ),
+                  ksizedbox10,
                   // InkWell(
                   //   onTap: () {
                   //     authController.professinalindex(3);
@@ -266,16 +265,16 @@ class _OnbordingStudentState extends State<OnbordingStudent> {
             ksizedbox40,
             ksizedbox30,
             InkWell(
-              onTap: (){
-                var type;
-                if(authController.professinalindex.value == 0){
+              onTap: () {
+                String? type;
+                if (authController.professinalindex.value == 0) {
                   type = "Mentor";
-                }else if(authController.professinalindex.value == 1){
+                } else if (authController.professinalindex.value == 1) {
                   type = "Training";
-                }else if(authController.professinalindex.value == 2){
+                } else if (authController.professinalindex.value == 2) {
                   type = "Certification";
                 }
-                authController.studentProfessionaltype(type: type);
+                authController.studentProfessionaltype(type: type!);
                 //Get.offAll(const registersplash());
               },
               child: Container(

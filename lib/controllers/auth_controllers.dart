@@ -5,7 +5,7 @@ import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/profile_controller.dart';
 import 'package:simpa/models/city_list_model.dart';
 import 'package:simpa/models/department_model.dart';
-import 'package:simpa/models/get_education_skills_model.dart';
+import 'package:simpa/models/get_postion_model.dart';
 import 'package:simpa/models/industries_model.dart';
 import 'package:simpa/models/profile_update_model.dart';
 import 'package:simpa/models/register_model.dart';
@@ -19,7 +19,7 @@ import 'package:simpa/services/network_api_services/auth_api_services/check_veri
 import 'package:simpa/services/network_api_services/auth_api_services/fcm_token_store_api_service.dart';
 import 'package:simpa/services/network_api_services/auth_api_services/get_city_api_services.dart';
 import 'package:simpa/services/network_api_services/auth_api_services/get_departments_api_services.dart';
-import 'package:simpa/services/network_api_services/auth_api_services/get_educatinal_skills_api_service.dart';
+import 'package:simpa/services/network_api_services/auth_api_services/get_postion_service.dart';
 import 'package:simpa/services/network_api_services/auth_api_services/get_requirements_list_api_services.dart';
 import 'package:simpa/services/network_api_services/auth_api_services/get_skills_api_services.dart';
 import 'package:simpa/services/network_api_services/auth_api_services/get_slider_api_services.dart';
@@ -55,7 +55,6 @@ class AuthController extends GetxController {
   RxInt wayIndex = 0.obs;
   RxInt professinalindex = 0.obs;
   RxInt mobileStatus = 0.obs;
-
   var selectedState;
   var selectedCity;
   var selectdt;
@@ -91,7 +90,7 @@ class AuthController extends GetxController {
 
   GetIndustriesApiServices getIndustriesApiServices =
       GetIndustriesApiServices();
-
+  GetPostionApiServices getpostionApiServices = GetPostionApiServices();
   GetRequirementsApiServices getRequirementsApiServices =
       GetRequirementsApiServices();
 
@@ -214,6 +213,7 @@ class AuthController extends GetxController {
 
   List<Industry> industriesList = [];
   List<SkillsData> skillsDataList = [];
+  List<GetPostionData> getpostionDataList = [];
 
   getIndustriesList() async {
     dio.Response<dynamic> response =
@@ -223,6 +223,23 @@ class AuthController extends GetxController {
       IndustriesModel departmentModel = IndustriesModel.fromJson(response.data);
       industriesList = departmentModel.industries;
       update();
+    }
+  }
+
+  Future<void> getpostionList({required String postionid}) async {
+    isLoading(true);
+    try {
+      dio.Response<dynamic> response =
+          await getpostionApiServices.getpostionApiServices(postionid);
+      isLoading(false);
+      if (response.statusCode == 200) {
+        Getpostionmodel postionModel = Getpostionmodel.fromJson(response.data);
+        getpostionDataList.clear();
+        getpostionDataList.add(postionModel.data);
+        update();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -239,7 +256,7 @@ class AuthController extends GetxController {
       // } else {
       //   Get.offAll(ObordingProfotional());
       // }
-      Get.offAll(ObordingProfotional());
+      Get.offAll(const ObordingProfotional());
       // Get.rawSnackbar(
       //   messageText: const Text(
       //     "Registered Successfully",
@@ -276,7 +293,7 @@ class AuthController extends GetxController {
       // } else {
       //   Get.offAll(ObordingProfotional());
       // }
-      Get.offAll(OnbordingStudent());
+      Get.offAll(const OnbordingStudent());
       // Get.rawSnackbar(
       //   messageText: const Text(
       //     "Registered Successfully",
@@ -296,14 +313,15 @@ class AuthController extends GetxController {
   }
 
   //existing user - update user type
-  UserTypeUpdateApiService userTypeUpdateApiService = UserTypeUpdateApiService();
+  UserTypeUpdateApiService userTypeUpdateApiService =
+      UserTypeUpdateApiService();
 
   updateUserType({required String userType}) async {
-    dio.Response<dynamic> response = await userTypeUpdateApiService.userTypeUpdateApiService(
-      userType: userType);
-      if(response.statusCode == 200){
-        Get.back();
-      }
+    dio.Response<dynamic> response = await userTypeUpdateApiService
+        .userTypeUpdateApiService(userType: userType);
+    if (response.statusCode == 200) {
+      Get.back();
+    }
   }
 
   loginUser({required String username, required String password}) async {
@@ -418,7 +436,7 @@ class AuthController extends GetxController {
         await checkVerificationApiService.checkVerification(emailId: emailId);
 
     if (response.statusCode == 200) {
-      if (response.data["status"] == 1) {
+      if (response.data["status"] == "1") {
         isverified = true;
       } else {
         isverified = false;
@@ -444,24 +462,32 @@ class AuthController extends GetxController {
   }
 
   getCityList(int stateId) async {
-    dio.Response<dynamic> response =
-        await getCityApiServices.getCityApi(stateId);
-    if (response.statusCode == 200) {
-      CityListModel cityListModel = CityListModel.fromJson(response.data);
-      cityList = cityListModel.cityList;
+    try {
+      dio.Response<dynamic> response =
+          await getCityApiServices.getCityApi(stateId);
+      if (response.statusCode == 200) {
+        CityListModel cityListModel = CityListModel.fromJson(response.data);
+        cityList = cityListModel.cityList;
+      }
+      update();
+    } catch (e) {
+      print(e);
     }
-    update();
   }
 
   getRequiremetList() async {
-    dio.Response<dynamic> response =
-        await getRequirementsApiServices.getRequiremtsApi();
-    if (response.statusCode == 200) {
-      RequirementsModel requirementsModel =
-          RequirementsModel.fromJson(response.data);
-      requirementList = requirementsModel.requirement;
+    try {
+      dio.Response<dynamic> response =
+          await getRequirementsApiServices.getRequiremtsApi();
+      if (response.statusCode == 200) {
+        RequirementsModel requirementsModel =
+            RequirementsModel.fromJson(response.data);
+        requirementList = requirementsModel.requirement;
+      }
+      update();
+    } catch (e) {
+      print(e);
     }
-    update();
   }
 
   //education list
@@ -554,12 +580,11 @@ class AuthController extends GetxController {
     }
   }
 
-  //existing user 
+  //existing user
   eStudentProfessionaltype({required String type}) async {
     dio.Response<dynamic> response =
         await studentProfile.studentProfile(type: type);
-    if (response.statusCode == 200) {
-    }
+    if (response.statusCode == 200) {}
   }
 
   //update education skills

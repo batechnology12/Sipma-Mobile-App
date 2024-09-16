@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:simpa/constands/constands.dart';
-import 'package:simpa/constands/constands.dart';
 
-import '../constands/constands.dart';
 
 class search extends StatelessWidget {
   TextEditingController textController;
@@ -42,7 +37,7 @@ class search extends StatelessWidget {
             Expanded(
               child: TextField(
                   controller: textController,
-                  decoration: InputDecoration.collapsed(hintText: "Search")),
+                  decoration: const InputDecoration.collapsed(hintText: "Search")),
             ),
           ],
         ),

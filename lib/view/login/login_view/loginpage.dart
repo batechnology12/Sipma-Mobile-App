@@ -1,27 +1,15 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:simpa/constands/constands.dart';
 import 'package:simpa/controllers/auth_controllers.dart';
 import 'package:simpa/controllers/profile_controller.dart';
 import 'package:simpa/view/forgot_page.dart';
 import 'package:simpa/view/select_role_screen.dart';
-import 'package:simpa/widgets/home_containers.dart';
-import 'package:simpa/view/home_page.dart';
-import 'package:simpa/view/register_details_page.dart';
-import 'package:simpa/view/register_page1.dart';
 //import 'package:simpa/widgets/carousal.dart';
-import 'package:simpa/widgets/textfield.dart';
 
-import '../../../widgets/bottumnavigationbar.dart';
 
 class loginpage extends StatefulWidget {
   const loginpage({super.key});
@@ -78,7 +66,7 @@ class _loginpageState extends State<loginpage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: size.width,
             child: Image.asset(
               'assets/images/Ellipse 1.png',
@@ -111,7 +99,7 @@ class _loginpageState extends State<loginpage> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(15.0),
-                                          child: Container(
+                                          child: SizedBox(
                                             width: 80,
                                             height: 100,
                                             child: Image.network(
@@ -132,7 +120,7 @@ class _loginpageState extends State<loginpage> {
                                                   .sliderList[i].title,
                                               style: ktextstyle,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: 180,
                                               child: Text(
                                                 authController
@@ -215,7 +203,7 @@ class _loginpageState extends State<loginpage> {
                               aspectRatio: 16 / 9,
                               enableInfiniteScroll: true,
                               autoPlayAnimationDuration:
-                                  Duration(milliseconds: 3200),
+                                  const Duration(milliseconds: 3200),
                               viewportFraction: 0.8,
                               onPageChanged: (index, reason) {
                                 setState(() {
@@ -230,6 +218,9 @@ class _loginpageState extends State<loginpage> {
                           child: Container(
                             height: 6,
                             width: 55,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(203, 35, 69, 107),
+                                borderRadius: BorderRadius.circular(4)),
                             child: Row(
                               mainAxisAlignment: pageIndex == 0
                                   ? MainAxisAlignment.start
@@ -254,9 +245,6 @@ class _loginpageState extends State<loginpage> {
                                 ),
                               ],
                             ),
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(203, 35, 69, 107),
-                                borderRadius: BorderRadius.circular(4)),
                           ),
                         )
                       ],
@@ -278,7 +266,7 @@ class _loginpageState extends State<loginpage> {
                       children: [
                         ksizedbox10,
                         Animate(
-                          effects: [
+                          effects: const [
                             FadeEffect(),
                             ScaleEffect(),
                           ],
@@ -466,7 +454,7 @@ class _loginpageState extends State<loginpage> {
                               padding: const EdgeInsets.all(8.0),
                               child: TextButton(
                                 onPressed: () {
-                                  Get.to(ForgetPassword());
+                                  Get.to(const ForgetPassword());
                                 },
                                 child: const Text(
                                   'Forgot Password?',
@@ -539,7 +527,7 @@ class _loginpageState extends State<loginpage> {
                             TextButton(
                               onPressed: () {
                                 Get.to(
-                                  SelectRoleScreen(),
+                                  const SelectRoleScreen(),
                                  // RegisterScreen(),
                                 );
                               },

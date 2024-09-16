@@ -5,7 +5,7 @@ import 'package:simpa/constands/constands.dart';
 class SendedImageView extends StatelessWidget {
   String image;
   String timestamp;
-  SendedImageView({
+  SendedImageView({super.key, 
     required this.image,
     required this.timestamp,
   });
@@ -40,7 +40,7 @@ class SendedImageView extends StatelessWidget {
                   //Activity container
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Container(
+                    child: SizedBox(
                       height: 200,
                       width: size.width * 0.5,
                       child: Image.network(

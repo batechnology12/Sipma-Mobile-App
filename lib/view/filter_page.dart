@@ -21,11 +21,11 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  bool _allTap = false;
-  bool _hrTap = false;
-  bool _salesTap = false;
-  bool _marketTap = false;
-  bool _addTap = false;
+  final bool _allTap = false;
+  final bool _hrTap = false;
+  final bool _salesTap = false;
+  final bool _marketTap = false;
+  final bool _addTap = false;
 
   final authController = Get.find<AuthController>();
   final postsController = Get.find<PostsController>();
@@ -52,7 +52,7 @@ class _FilterPageState extends State<FilterPage> {
             const SizedBox(
               height: 15,
             ),
-            Container(
+            SizedBox(
               height: 45,
               child: GetBuilder<AuthController>(builder: (_) {
                 return SingleChildScrollView(
@@ -89,7 +89,7 @@ class _FilterPageState extends State<FilterPage> {
                       ),
                       ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: authController.departments.length,
                           itemBuilder: (context, index) {
@@ -101,7 +101,7 @@ class _FilterPageState extends State<FilterPage> {
                                     backgroundColor:
                                         authController.selctedIndex.value ==
                                                 index
-                                            ? Color(0xff3C73B1)
+                                            ? const Color(0xff3C73B1)
                                             : Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),

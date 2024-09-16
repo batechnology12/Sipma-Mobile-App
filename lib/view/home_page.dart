@@ -20,7 +20,7 @@ import '../widgets/bottumnavigationbar.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
   @override
   State<Homepage> createState() => _HomepageState();
 }
@@ -38,7 +38,7 @@ class _HomepageState extends State<Homepage> {
   var citySelected;
   var requiremtsSelected;
   var education;
-  
+
   List<String> educationList = [
     "10th",
     "12th",
@@ -69,15 +69,15 @@ class _HomepageState extends State<Homepage> {
   }
 
   userTypeUpdate() async {
-   await profileController.getProfile();
-   if(profileController.profileData.isNotEmpty){
-      if(profileController.profileData.first.user.userType == "null"){
-      await Future.delayed(const Duration(milliseconds: 50));
-     _usertypPopup();
-    }else{
-      educationPopup();
+    await profileController.getProfile();
+    if (profileController.profileData.isNotEmpty) {
+      if (profileController.profileData.first.user.userType == "null") {
+        await Future.delayed(const Duration(milliseconds: 50));
+        _usertypPopup();
+      } else {
+        educationPopup();
+      }
     }
-   }
   }
 
   // saveToken() async {
@@ -129,7 +129,7 @@ class _HomepageState extends State<Homepage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary: const Color.fromARGB(255, 42, 59, 158),
+                  foregroundColor: const Color.fromARGB(255, 42, 59, 158),
                 ),
               ),
             ),
@@ -169,7 +169,7 @@ class _HomepageState extends State<Homepage> {
               ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary: const Color.fromARGB(255, 42, 59, 158),
+                  foregroundColor: const Color.fromARGB(255, 42, 59, 158),
                 ),
               ),
             ),
@@ -193,7 +193,7 @@ class _HomepageState extends State<Homepage> {
     authController.update();
   }
 
-   var institutenameController = TextEditingController();
+  var institutenameController = TextEditingController();
   var certificateController = TextEditingController();
   var cCityController = TextEditingController();
   var cStateController = TextEditingController();
@@ -207,7 +207,7 @@ class _HomepageState extends State<Homepage> {
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: [0, 0.6],
+              stops: const [0, 0.6],
               colors: [kblue, Colors.white])),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -755,14 +755,7 @@ class _HomepageState extends State<Homepage> {
                                                                       index]
                                                                   .comment >=
                                                               1000
-                                                          ? (postsController
-                                                                          .allPostList[
-                                                                              index]
-                                                                          .comment /
-                                                                      1000.0)
-                                                                  .toStringAsFixed(
-                                                                      1) +
-                                                              'k'
+                                                          ? '${(postsController.allPostList[index].comment / 1000.0).toStringAsFixed(1)}k'
                                                           : postsController
                                                               .allPostList[
                                                                   index]
@@ -772,7 +765,7 @@ class _HomepageState extends State<Homepage> {
                                                     const Text(" Comments")
                                                   ],
                                                 ),
-                                              )
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -818,6 +811,21 @@ class _HomepageState extends State<Homepage> {
                                               },
                                               child: kcomentbutton,
                                             ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                postsController.commentsList
+                                                    .clear();
+                                                postsController.update();
+                                                Get.to(coments(
+                                                  postId: postsController
+                                                      .allPostList[index].id,
+                                                ));
+                                              },
+                                              child: ksharebutton,
+                                            ),
                                           ],
                                         )
                                       ],
@@ -857,582 +865,616 @@ class _HomepageState extends State<Homepage> {
   var enddatepgController = TextEditingController();
   var courseController = TextEditingController();
   var durationController = TextEditingController();
-  
 
-  _educationPopup(){
+  _educationPopup() {
     showDialog(
-              context: context,
-                            builder: (BuildContext context) {
-                              return Obx( () =>
-                                 AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        18.0), // Adjust the radius as needed
-                                  ),
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text('Fill Your Education Details'),
-                                      InkWell(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Icon(
-                                            Icons.close,
-                                            color: Colors.red[500],
-                                          ))
-                                    ],
-                                  ),
-                                  content:const Text('Choose your education and update the required details.'),
-                                  actions: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 20, left: 10, right: 10),
-                                      child: Column(
-                                        children: [
-                                          //  ksizedbox10,
-                                          Container(
-                                  height: 56,
-                                  child: DropdownSearch<String>(
-                                    itemAsString: (String u) => u,
-                                    popupProps: PopupProps.menu(
-                                      showSelectedItems: false,
-                                      showSearchBox: true,
-                                      menuProps: MenuProps(
+      context: context,
+      builder: (BuildContext context) {
+        return Obx(
+          () => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(18.0), // Adjust the radius as needed
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Fill Your Education Details'),
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.red[500],
+                    ))
+              ],
+            ),
+            content: const Text(
+                'Choose your education and update the required details.'),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
+                child: Column(
+                  children: [
+                    //  ksizedbox10,
+                    SizedBox(
+                      height: 56,
+                      child: DropdownSearch<String>(
+                        itemAsString: (String u) => u,
+                        popupProps: PopupProps.menu(
+                          showSelectedItems: false,
+                          showSearchBox: true,
+                          menuProps: MenuProps(
+                              borderRadius: BorderRadius.circular(10)),
+                          searchFieldProps: const TextFieldProps(),
+                        ),
+                        items: educationList,
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                              // labelText: "Department *",
+                              hintText: "Select education",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15))),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            profileController.educationlist(value);
+                            standardsController.text = value.toString();
+                          });
+                        },
+                        // selectedItem: selectedState,
+                      ),
+                    ),
+                    if (profileController.educationlist.value == "10th" ||
+                        profileController.educationlist.value == "12th")
+                      ksizedbox10,
+                    if (profileController.educationlist.value == "10th" ||
+                        profileController.educationlist.value == "12th")
+                      TextFormFieldWidget(
+                        labeltext: 'School name',
+                        controller: schoolController,
+                      ),
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG" ||
+                        profileController.educationlist.value == "PUC")
+                      ksizedbox10,
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG" ||
+                        profileController.educationlist.value == "PUC")
+                      TextFormFieldWidget(
+                        controller: schoolController,
+                        labeltext: 'University name',
+                      ),
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG")
+                      ksizedbox10,
+                    if (profileController.educationlist.value == "UG" ||
+                        profileController.educationlist.value == "PG")
+                      TextFormFieldWidget(
+                        controller: collagepgController,
+                        labeltext: 'College',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        controller: schoolController,
+                        labeltext: 'Institution Name',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        controller: courseController,
+                        labeltext: 'Course Name',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        controller: durationController,
+                        labeltext: 'Duration',
+                      ),
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      ksizedbox10,
+                    if (profileController.educationlist.value ==
+                        "Certificates / Others")
+                      TextFormFieldWidget(
+                        labeltext: 'Course / Certificate',
+                        controller: certificateController,
+                      ),
+                    // TextFormFieldWidget(
+                    //   labeltext: 'Standards',
+                    //   controller: standardsController,
+                    // ),
+                    // ksizedbox10,
+                    ksizedbox10,
+                    TextFormFieldWidget(
+                      labeltext: 'City',
+                      controller: cityController,
+                    ),
+                    ksizedbox10,
+                    TextFormFieldWidget(
+                      labeltext: ' State',
+                      controller: stateController,
+                    ),
+                    ksizedbox10,
+                    GetBuilder<AuthController>(builder: (_) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _showStartDate(context);
+                            },
+                            child: Container(
+                              width: 120,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: Text(selectdt),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'To',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: kgrey),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              _showEndDate(context);
+                            },
+                            child: Container(
+                              width: 120,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: selectdt1 ==
+                                        formatDate(
+                                            DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day),
+                                            [yyyy, "-", mm, "-", dd])
+                                    ? const Text("Till Date")
+                                    : Text(selectdt1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                    ksizedbox10,
+                    InkWell(
+                      onTap: () {
+                        var flag = "";
+                        if (standardsController.text == "10th" ||
+                            standardsController.text == "12th") {
+                          flag = "student";
+                        } else if (standardsController.text == "UG" ||
+                            standardsController.text == "PG" ||
+                            standardsController.text == "PUC") {
+                          flag = "college";
+                        } else {
+                          flag = "institute";
+                        }
+
+                        print("-------->> chack values <<---------");
+                        print(schoolController.text);
+                        print(standardsController.text);
+                        authController.addEducationalSkills(
+                            flag: flag,
+                            institutionname: schoolController.text,
+                            userId: "",
+                            educationtitle: standardsController.text,
+                            city: cityController.text,
+                            state: stateController.text,
+                            frombatch: selectdt,
+                            tilldate: selectdt1 ==
+                                    formatDate(
+                                        DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day),
+                                        [yyyy, "-", mm, "-", dd])
+                                ? "Till Date"
+                                : selectdt,
+                            educationdescription: certificateController.text);
+                        //   Get.back();
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48,
+                        decoration: BoxDecoration(
+                            color: kblue,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Center(
+                            child: Text(
+                          'Submit',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: kwhite),
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _usertypPopup() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Obx(
+          () => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(18.0), // Adjust the radius as needed
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    authController.wayIndex(0);
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color:
+                          authController.wayIndex.value == 0 ? kblue : kwhite,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Student",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: authController.wayIndex.value == 0
+                                ? kwhite
+                                : kblue),
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    authController.wayIndex(1);
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color:
+                          authController.wayIndex.value == 0 ? kwhite : kblue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Professional",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: authController.wayIndex.value == 0
+                                ? kblue
+                                : kwhite),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            content: const Text(
+              'Would you like to be a  __________',
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+            ),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        authController.professinalindex(0);
+                      },
+                      child: Container(
+                        height: 40,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: kgrey),
+                            borderRadius: BorderRadius.circular(25)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // kwidth10,
+                              const Text(
+                                'Mentor',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              authController.professinalindex.value == 0
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: kblue,
+                                      size: 28,
+                                    )
+                                  : Container(
+                                      width: 24,
+                                      height: 24,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                    )
+                              //   kwidth10
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    ksizedbox10,
+                    ksizedbox10,
+                    if (authController.wayIndex == 1)
+                      InkWell(
+                        onTap: () {
+                          authController.professinalindex(1);
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: kgrey),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // kwidth10,
+                                const Text(
+                                  'Trainer',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                authController.professinalindex.value == 1
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: kblue,
+                                        size: 28,
+                                      )
+                                    : Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
                                           borderRadius:
-                                              BorderRadius.circular(10)),
-                                      searchFieldProps: const TextFieldProps(),
-                                    ),
-                                    items: educationList,
-                                    dropdownDecoratorProps:
-                                        DropDownDecoratorProps(
-                                      dropdownSearchDecoration: InputDecoration(
-                                          // labelText: "Department *",
-                                          hintText: "Select education",
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15))),
-                                    ),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        profileController.educationlist(value);
-                                        standardsController.text = value.toString();
-                                      });
-                                    },
-                                    // selectedItem: selectedState,
-                                  ),
-                                ),          
-                                          if(profileController.educationlist.value == "10th" || profileController.educationlist.value == "12th")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "10th" || profileController.educationlist.value == "12th")
-                                          TextFormFieldWidget(
-                                            labeltext: 'School name',
-                                            controller: schoolController,
-                                          ),
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG" || profileController.educationlist.value == "PUC")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG" || profileController.educationlist.value == "PUC")
-                                          TextFormFieldWidget(
-                                            controller: schoolController,
-                                            labeltext: 'University name',
-                                          ),
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "UG" || profileController.educationlist.value == "PG")
-                                          TextFormFieldWidget(
-                                            controller: collagepgController,
-                                            labeltext: 'College',
-                                          ),
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                          ksizedbox10,
-                                           if(profileController.educationlist.value == "Certificates / Others")
-                                          TextFormFieldWidget(
-                                          controller: schoolController,
-                                          labeltext: 'Institution Name',
+                                              BorderRadius.circular(25),
                                         ),
-                                         if(profileController.educationlist.value == "Certificates / Others")
-                                        ksizedbox10,
-                                         if(profileController.educationlist.value == "Certificates / Others")
-                                        TextFormFieldWidget(
-                                          controller: courseController,
-                                          labeltext: 'Course Name',
-                                        ),
-                                         if(profileController.educationlist.value == "Certificates / Others")
-                                        ksizedbox10,
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                           TextFormFieldWidget(
-                                            controller: durationController,
-                                            labeltext: 'Duration',
-                                          ),
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                          ksizedbox10,
-                                          if(profileController.educationlist.value == "Certificates / Others")
-                                          TextFormFieldWidget(
-                                            labeltext: 'Course / Certificate',
-                                            controller: certificateController,
-                                          ),
-                                          // TextFormFieldWidget(
-                                          //   labeltext: 'Standards',
-                                          //   controller: standardsController,
-                                          // ),
-                                          // ksizedbox10,
-                                          ksizedbox10,
-                                          TextFormFieldWidget(
-                                            labeltext: 'City',
-                                            controller: cityController,
-                                          ),
-                                          ksizedbox10,
-                                          TextFormFieldWidget(
-                                            labeltext: ' State',
-                                            controller: stateController,
-                                          ),
-                                          ksizedbox10,
-                                          GetBuilder<AuthController>(
-                                            builder: (_) {
-                                              return Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  InkWell(
-                                                    onTap: (){
-                                                      _showStartDate(context);
-                                                    },
-                                                    child: Container(
-                                                      width: 120,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey[100],
-                                                        borderRadius: BorderRadius.circular(10)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          selectdt
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'To',
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: kgrey),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      _showEndDate(context);
-                                                    },
-                                                    child: Container(
-                                                      width: 120,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey[100],
-                                                        borderRadius: BorderRadius.circular(10)
-                                                      ),
-                                                      child: Center(
-                                                        child:selectdt1 == formatDate(
-                                                        DateTime(DateTime.now().year, 
-                                                        DateTime.now().month, DateTime.now().day),
-                                                        [yyyy, "-", mm, "-", dd])
-                                                         ? const Text("Till Date") : Text(selectdt1),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            }
-                                          ),
-                                          ksizedbox10,
-                                          InkWell(
-                                            onTap: () {
-                                              var flag = "";
-                                              if(standardsController.text == "10th" || standardsController.text == "12th"){
-                                                flag = "student";
-                                              }else if(standardsController.text == "UG" || standardsController.text == "PG" || standardsController.text == "PUC" ){
-                                                flag = "college";
-                                              }else{
-                                                flag = "institute";
-                                              }
-                                              
-                                              print(
-                                                  "-------->> chack values <<---------");
-                                              print(schoolController.text);
-                                              print(standardsController.text);
-                                              authController.addEducationalSkills(
-                                                  flag: flag,
-                                                  institutionname: schoolController.text,
-                                                  userId: "",
-                                                  educationtitle: standardsController.text,
-                                                  city: cityController.text,
-                                                  state: stateController.text,
-                                                  frombatch: selectdt,
-                                                  tilldate: selectdt1 == formatDate(
-                                                  DateTime(DateTime.now().year, 
-                                                  DateTime.now().month, DateTime.now().day),
-                                                  [yyyy, "-", mm, "-", dd]) ? "Till Date" : selectdt,
-                                                  educationdescription: certificateController.text);
-                                              //   Get.back();
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 48,
-                                              decoration: BoxDecoration(
-                                                  color: kblue,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16)),
-                                              child: Center(
-                                                  child: Text(
-                                                'Submit',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 16,
-                                                    color: kwhite),
-                                              )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                      )
+                                //   kwidth10
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (authController.wayIndex == 0)
+                      InkWell(
+                        onTap: () {
+                          authController.professinalindex(1);
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: kgrey),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // kwidth10,
+                                const Text(
+                                  'Training',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
-                              );
-                            },
-                          );
-                      }
-
-                   _usertypPopup(){
-                       showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return Obx( () =>
-                                 AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        18.0), // Adjust the radius as needed
-                                  ),
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: (){
-                                          authController.wayIndex(0);
-                                        },
-                                        child: Container(
-                                          height: 35,
-                                          width: 120,
-                                          decoration: BoxDecoration(
-                                            color: authController.wayIndex.value == 0 ? kblue : kwhite,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text("Student",
-                                             style: TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 16,
-                                                      color: authController.wayIndex.value == 0 ? kwhite : kblue),
-                                            ),
-                                          ),
+                                authController.professinalindex.value == 1
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: kblue,
+                                        size: 28,
+                                      )
+                                    : Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius:
+                                              BorderRadius.circular(25),
                                         ),
-                                      ),
-                                      InkWell(
-                                        onTap: (){
-                                          authController.wayIndex(1);
-                                        },
-                                        child: Container(
-                                          height: 35,
-                                          width: 120,
-                                          decoration: BoxDecoration(
-                                            color:authController.wayIndex.value == 0 ? kwhite : kblue,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text("Professional",
-                                             style: TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 16,
-                                                      color:authController.wayIndex.value == 0 ? kblue : kwhite),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  content:const Text(
-                                         'Would you like to be a  __________',
-                                         style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                                        ),
-                                  actions: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 20, left: 10, right: 10),
-                                      child: Column(
-                                        children: [
-                                          InkWell(
-                    onTap: () {
-                      authController.professinalindex(0);
-                    },
-                    child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: kgrey),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // kwidth10,
-                            const Text(
-                              'Mentor',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                      )
+                                //   kwidth10
+                              ],
                             ),
-                            authController.professinalindex.value == 0
-                                ? Icon(
-                                    Icons.check_circle,
-                                    color: kblue,
-                                    size: 28,
-                                  )
-                                : Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  )
-                            //   kwidth10
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  ksizedbox10,
-                  ksizedbox10,
-                  if(authController.wayIndex == 1)
-                  InkWell(
-                    onTap: () {
-                      authController.professinalindex(1);
-                    },
-                    child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: kgrey),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // kwidth10,
-                            const Text(
-                              'Trainer',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                            authController.professinalindex.value == 1
-                                ? Icon(
-                                    Icons.check_circle,
-                                    color: kblue,
-                                    size: 28,
-                                  )
-                                : Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  )
-                            //   kwidth10
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if(authController.wayIndex == 0)
-                  InkWell(
-                    onTap: () {
-                      authController.professinalindex(1);
-                    },
-                    child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: kgrey),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // kwidth10,
-                            const Text(
-                              'Training',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                            authController.professinalindex.value == 1
-                                ? Icon(
-                                    Icons.check_circle,
-                                    color: kblue,
-                                    size: 28,
-                                  )
-                                : Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  )
-                            //   kwidth10
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  ksizedbox10,
-                  ksizedbox10,
-                  if(authController.wayIndex == 0)
-                  InkWell(
-                    onTap: () {
-                      authController.professinalindex(2);
-                    },
-                    child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: kgrey),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // kwidth10,
-                            const Text(
-                              'Certification',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                            authController.professinalindex.value == 2
-                                ? Icon(
-                                    Icons.check_circle,
-                                    color: kblue,
-                                    size: 28,
-                                  )
-                                : Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  )
-                            //   kwidth10
-                          ],
-                        ),
-                      ),
-                    ),
-                  ), 
-                  if(authController.wayIndex == 1)
-                  InkWell(
-                    onTap: () {
-                      authController.professinalindex(2);
-                    },
-                    child: Container(
-                      height: 40,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: kgrey),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // kwidth10,
-                            const Text(
-                              'Guide',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                            authController.professinalindex.value == 2
-                                ? Icon(
-                                    Icons.check_circle,
-                                    color: kblue,
-                                    size: 28,
-                                  )
-                                : Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  )
-                            //   kwidth10
-                          ],
-                        ),
-                      ),
-                    ),
-                  ), 
-                                          ksizedbox30,
-                                          InkWell(
-                                            onTap: () {
-                                              var type;
-                                              if(authController.wayIndex.value == 0){
-                                                if(authController.professinalindex.value == 0){
-                                                type = "Mentor";
-                                              }else if(authController.professinalindex.value == 1){
-                                                type = "Training";
-                                              }else if(authController.professinalindex.value == 2){
-                                                type = "Certification";
-                                              }
-                                              authController.eStudentProfessionaltype(type: type);
-                                              } else {
-                                                if(authController.professinalindex.value == 0){
-                                                  type = "Mentor";
-                                                }else if(authController.professinalindex.value == 1){
-                                                  type = "Trainer";
-                                                }else if(authController.professinalindex.value == 2){
-                                                  type = "Guide";
-                                                }
-                                                authController.eStudentProfessionaltype(type: type);
-                                              }
-                                              authController.updateUserType(userType: authController.wayIndex.value == 0 ? "Student" : "Professional");
-                                              educationPopup();
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 48,
-                                              decoration: BoxDecoration(
-                                                  color: kblue,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16)),
-                                              child: Center(
-                                                  child: Text(
-                                                'Submit',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 16,
-                                                    color: kwhite),
-                                              )),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                    ksizedbox10,
+                    ksizedbox10,
+                    if (authController.wayIndex == 0)
+                      InkWell(
+                        onTap: () {
+                          authController.professinalindex(2);
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: kgrey),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // kwidth10,
+                                const Text(
+                                  'Certification',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
-                              );
-                            },
-                          );
-                      }
-
+                                authController.professinalindex.value == 2
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: kblue,
+                                        size: 28,
+                                      )
+                                    : Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                      )
+                                //   kwidth10
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (authController.wayIndex == 1)
+                      InkWell(
+                        onTap: () {
+                          authController.professinalindex(2);
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: kgrey),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // kwidth10,
+                                const Text(
+                                  'Guide',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                authController.professinalindex.value == 2
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: kblue,
+                                        size: 28,
+                                      )
+                                    : Container(
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                      )
+                                //   kwidth10
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ksizedbox30,
+                    InkWell(
+                      onTap: () {
+                        String? type;
+                        if (authController.wayIndex.value == 0) {
+                          if (authController.professinalindex.value == 0) {
+                            type = "Mentor";
+                          } else if (authController.professinalindex.value ==
+                              1) {
+                            type = "Training";
+                          } else if (authController.professinalindex.value ==
+                              2) {
+                            type = "Certification";
+                          }
+                          authController.eStudentProfessionaltype(type: type!);
+                        } else {
+                          if (authController.professinalindex.value == 0) {
+                            type = "Mentor";
+                          } else if (authController.professinalindex.value ==
+                              1) {
+                            type = "Trainer";
+                          } else if (authController.professinalindex.value ==
+                              2) {
+                            type = "Guide";
+                          }
+                          authController.eStudentProfessionaltype(type: type!);
+                        }
+                        authController.updateUserType(
+                            userType: authController.wayIndex.value == 0
+                                ? "Student"
+                                : "Professional");
+                        educationPopup();
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48,
+                        decoration: BoxDecoration(
+                            color: kblue,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Center(
+                            child: Text(
+                          'Submit',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: kwhite),
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

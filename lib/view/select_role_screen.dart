@@ -46,7 +46,7 @@ class _SelectRoleScreenState extends State<SelectRoleScreen> {
                       InkWell(
                         onTap: (){
                           authController.wayIndex(0);
-                          Get.to(RegisterScreen());
+                          Get.to(const RegisterScreen());
                         },
                         child: Container(
                           height: 110,
@@ -73,7 +73,7 @@ class _SelectRoleScreenState extends State<SelectRoleScreen> {
                       InkWell(
                         onTap: (){
                           authController.wayIndex(1);
-                          Get.to(RegisterScreen());
+                          Get.to(const RegisterScreen());
                         },
                         child: Container(
                           height: 110,

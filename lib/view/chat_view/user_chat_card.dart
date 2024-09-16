@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:simpa/constands/constands.dart';
@@ -13,7 +11,7 @@ import 'package:simpa/models/chat_models.dart';
 
 class UserChatCard extends StatefulWidget {
   ChatListModel chatUser;
-  UserChatCard({
+  UserChatCard({super.key, 
     required this.chatUser,
   });
 
@@ -194,7 +192,7 @@ class _UserChatCardState extends State<UserChatCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       widget.chatUser.photo == ""
-                          ? Container(
+                          ? SizedBox(
                               height: 50,
                               width: 50,
                               child: ClipRRect(
@@ -202,7 +200,7 @@ class _UserChatCardState extends State<UserChatCard> {
                                   child: Image.asset(
                                       "assets/icons/profil_img.jpeg")),
                             )
-                          : Container(
+                          : SizedBox(
                               height: 50,
                               width: 50,
                               child: ClipRRect(
@@ -221,7 +219,7 @@ class _UserChatCardState extends State<UserChatCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 170,
                             child: Text(
                               "${widget.chatUser.firstName} ${widget.chatUser.lastName}",
@@ -317,13 +315,13 @@ class _UserChatCardState extends State<UserChatCard> {
                                             color: Colors.white, fontSize: 13)),
                                   );
                                 } else {
-                                  return Container(
+                                  return const SizedBox(
                                     height: 22,
                                     width: 22,
                                   );
                                 }
                               } else {
-                                return Container(
+                                return const SizedBox(
                                   height: 22,
                                   width: 22,
                                 );

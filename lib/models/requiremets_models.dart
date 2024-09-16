@@ -34,12 +34,12 @@ class RequirementsModel {
 
 class Requirement {
   int id;
-  int departmentId;
+  String departmentId;
   String name;
   dynamic description;
-  int status;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Requirement({
     required this.id,
@@ -52,13 +52,17 @@ class Requirement {
   });
 
   factory Requirement.fromJson(Map<String, dynamic> json) => Requirement(
-        id: json["id"],
-        departmentId: json["department_id"],
-        name: json["name"],
-        description: json["description"],
-        status: json["status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        id: json["id"] ?? 0,
+        departmentId: json["department_id"] ?? "",
+        name: json["name"] ?? "",
+        description: json["description"] ?? "",
+        status: json["status"] ?? "",
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,7 +71,7 @@ class Requirement {
         "name": name,
         "description": description,
         "status": status,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }
